@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:gunpowder"
+    },
+    "E": {
+      "tag": "forge:ender_pearls"
+    }
+  },
+  "result": {
+    "item": "dabomb:ender_bomb",
+    "count": 2
+  }
+}

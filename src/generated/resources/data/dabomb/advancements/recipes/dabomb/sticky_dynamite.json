@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "dabomb:sticky_dynamite"
+    ]
+  },
+  "criteria": {
+    "has_dynamite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dabomb:dynamite"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "dabomb:sticky_dynamite"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dynamite",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/Mrbysco/DaBomb/issues"
+license="MIT"
+
+[[mods]]
+modId="dabomb"
+version="${file.jarVersion}"
+displayName="Da Bomb"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/da-bomb"
+authors="Mrbysco"
+description='''
+This mod will blow your mind (and caves) (and house)
+'''
+credits="Darkosto for the sounds / idea"
+[[dependencies.dabomb]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
+ordering="NONE"
+side="BOTH"
