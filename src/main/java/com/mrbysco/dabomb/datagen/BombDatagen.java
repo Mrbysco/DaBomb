@@ -110,6 +110,12 @@ public class BombDatagen {
 					.define('E', Ingredient.of(Tags.Items.ENDER_PEARLS))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
 					.save(consumer);
+			ShapedRecipeBuilder.shaped(BombRegistry.CLUSTER_BOMB_ITEM.get(), 1)
+					.pattern("GEG").pattern(" G ")
+					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
+					.define('E', Ingredient.of(BombRegistry.BOMB_ITEM.get()))
+					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
+					.save(consumer);
 
 			ShapedRecipeBuilder.shaped(BombRegistry.DYNAMITE_ITEM.get(), 3)
 					.pattern(" # ").pattern("GSG").pattern("GGG")
@@ -175,6 +181,8 @@ public class BombDatagen {
 			this.addEntityType(BombRegistry.FLOWER_BOMB, "Flower Bomb");
 			this.addItem(BombRegistry.ENDER_BOMB_ITEM, "Ender Bomb");
 			this.addEntityType(BombRegistry.ENDER_BOMB, "Ender Bomb");
+			this.addItem(BombRegistry.CLUSTER_BOMB_ITEM, "Cluster Bomb");
+			this.addEntityType(BombRegistry.CLUSTER_BOMB, "Cluster Bomb");
 
 			this.addItem(BombRegistry.DYNAMITE_ITEM, "Dynamite");
 			this.addEntityType(BombRegistry.DYNAMITE, "Dynamite");

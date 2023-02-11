@@ -31,18 +31,38 @@ public class ThrowableItem extends Item {
 		this.inaccuracy = inaccuracy;
 	}
 
+	public EntityType<?> getProjectile() {
+		return entityTypeSupplier.get();
+	}
+
+	public SoundEvent getSoundEvent() {
+		return soundSupplier.get();
+	}
+
+	public float getZ() {
+		return z;
+	}
+
+	public float getVelocity() {
+		return velocity;
+	}
+
+	public float getInaccuracy() {
+		return inaccuracy;
+	}
+
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
 		ItemStack itemstack = player.getItemInHand(interactionHand);
-		if (soundSupplier.get() != null) {
-			level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), soundSupplier.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+		if (getSoundEvent() != null) {
+			level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), getSoundEvent(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 		}
 		player.getCooldowns().addCooldown(this, cooldown);
-		if (!level.isClientSide && entityTypeSupplier.get() != null) {
-			if (entityTypeSupplier.get().create(level) instanceof ThrowableItemProjectile projectile) {
+		if (!level.isClientSide && getProjectile() != null) {
+			if (getProjectile().create(level) instanceof ThrowableItemProjectile projectile) {
 				projectile.setPosRaw(player.getX(), player.getEyeY() - (double) 0.1F, player.getZ());
 				projectile.setItem(itemstack);
 				projectile.setOwner(player);
-				projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), z, velocity, inaccuracy);
+				projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), getZ(), getVelocity(), getInaccuracy());
 				level.addFreshEntity(projectile);
 			}
 		}

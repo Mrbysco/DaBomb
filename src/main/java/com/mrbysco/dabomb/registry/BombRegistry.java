@@ -4,9 +4,11 @@ import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.entity.BeeBomb;
 import com.mrbysco.dabomb.entity.Bomb;
 import com.mrbysco.dabomb.entity.BombFish;
+import com.mrbysco.dabomb.entity.BombFragment;
 import com.mrbysco.dabomb.entity.BouncyBomb;
 import com.mrbysco.dabomb.entity.BouncyDynamite;
 import com.mrbysco.dabomb.entity.C4;
+import com.mrbysco.dabomb.entity.ClusterBomb;
 import com.mrbysco.dabomb.entity.DirtBomb;
 import com.mrbysco.dabomb.entity.DryBomb;
 import com.mrbysco.dabomb.entity.Dynamite;
@@ -56,6 +58,8 @@ public class BombRegistry {
 			BombRegistry.FLOWER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
 	public static final RegistryObject<Item> ENDER_BOMB_ITEM = ITEMS.register("ender_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
 			BombRegistry.ENDER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
+	public static final RegistryObject<Item> CLUSTER_BOMB_ITEM = ITEMS.register("cluster_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+			BombRegistry.CLUSTER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
 	//Dynamite
 	public static final RegistryObject<Item> DYNAMITE_ITEM = ITEMS.register("dynamite", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
 			BombRegistry.DYNAMITE::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
@@ -65,7 +69,7 @@ public class BombRegistry {
 			BombRegistry.BOUNCY_DYNAMITE::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
 	//C4 + Remote
 	public static final RegistryObject<Item> C4_ITEM = ITEMS.register("c4", () -> new C4Item(new Item.Properties().tab(DaBomb.tab),
-			BombRegistry.C4_ENTITY::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
+			BombRegistry.C4_ENTITY::get, BombRegistry.C4_SHOOT, 14, -20.0F, 0.45F, 1.0F));
 	public static final RegistryObject<Item> REMOTE = ITEMS.register("remote", () -> new RemoteItem(new Item.Properties().tab(DaBomb.tab)));
 
 	public static final RegistryObject<EntityType<Bomb>> BOMB = ENTITIES.register("bomb", () ->
@@ -112,6 +116,14 @@ public class BombRegistry {
 			EntityType.Builder.<EnderBomb>of(EnderBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
 					.setCustomClientFactory(EnderBomb::new).build("ender_bomb"));
+	public static final RegistryObject<EntityType<ClusterBomb>> CLUSTER_BOMB = ENTITIES.register("cluster_bomb", () ->
+			EntityType.Builder.<ClusterBomb>of(ClusterBomb::new, MobCategory.MISC)
+					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+					.setCustomClientFactory(ClusterBomb::new).build("cluster_bomb"));
+	public static final RegistryObject<EntityType<BombFragment>> BOMB_FRAGMENT = ENTITIES.register("bomb_fragment", () ->
+			EntityType.Builder.<BombFragment>of(BombFragment::new, MobCategory.MISC)
+					.sized(0.15625F, 0.15625F).clientTrackingRange(4).updateInterval(10)
+					.setCustomClientFactory(BombFragment::new).build("bomb_fragment"));
 	public static final RegistryObject<EntityType<Dynamite>> DYNAMITE = ENTITIES.register("dynamite", () ->
 			EntityType.Builder.<Dynamite>of(Dynamite::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
@@ -135,7 +147,7 @@ public class BombRegistry {
 			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "dynamite_shoot")));
 	public static final RegistryObject<SoundEvent> C4_SHOOT = SOUND_EVENTS.register("c4_shoot", () ->
 			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "c4_shoot")));
-	
+
 	public static final RegistryObject<SoundEvent> BOMB_PLANTED = SOUND_EVENTS.register("bomb_planted", () ->
 			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_planted")));
 	public static final RegistryObject<SoundEvent> BOMB_DEFUSED = SOUND_EVENTS.register("bomb_defused", () ->

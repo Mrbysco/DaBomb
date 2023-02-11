@@ -1,10 +1,11 @@
-177d29c6f5b4b4328c63d30919de71b61e8e9bb2 assets/dabomb/lang/en_us.json
+5f6abfd0c638d611198afbc93918c4294328ad84 assets/dabomb/lang/en_us.json
 4a2f36ee40ed1096e952298b09945e1ba8087b41 assets/dabomb/models/item/bee_bomb.json
 fe176cf4539e2aa142860eae5310a2c12526ef8b assets/dabomb/models/item/bomb.json
 331abb30421c1625daf3a78d2e625d9d2448c408 assets/dabomb/models/item/bomb_fish.json
 78297bc9b70cf86745b22e6ed0a3f137b4d07c41 assets/dabomb/models/item/bouncy_bomb.json
 260c011fbe17fa281d7b70a16f02de9c146f4281 assets/dabomb/models/item/bouncy_dynamite.json
 f3fc7d3c89c0d6e10944f7d7b5a06e46f70172df assets/dabomb/models/item/c4.json
+200cd31fa95b9da5103b95dccb96e92955838042 assets/dabomb/models/item/cluster_bomb.json
 7d5c08e7f1f07fb2aadf467cacb2344ceeccf103 assets/dabomb/models/item/dirt_bomb.json
 5b0f754d15229babe82c80cb1d791438c4c74231 assets/dabomb/models/item/dry_bomb.json
 4cb5adc77cec282ac5894e36a39bbb42c4928050 assets/dabomb/models/item/dynamite.json
@@ -22,6 +23,7 @@ df4c06ff8023be28e7fd528319565cd3bdc91e83 data/dabomb/advancements/recipes/dabomb
 4e9e10bd5feb8f3167962ef5f551879291aced02 data/dabomb/advancements/recipes/dabomb/bouncy_bomb.json
 b8ec6d6c9a5916d795978490f94122d00aab724f data/dabomb/advancements/recipes/dabomb/bouncy_dynamite.json
 a69d017fac832eb320d7f87b0fc0cfe778820d17 data/dabomb/advancements/recipes/dabomb/c4.json
+7bcc588ac37f850a1a5dedc7295e945967aa5767 data/dabomb/advancements/recipes/dabomb/cluster_bomb.json
 592b337899c5e312bd27cc33ba042348a1b101a4 data/dabomb/advancements/recipes/dabomb/dirt_bomb.json
 2480800218a2574fe6ecfbb1fc5dcaf8922c619d data/dabomb/advancements/recipes/dabomb/dry_bomb.json
 ea86c83d261908ffbea7c545fe5c6e99d4e23848 data/dabomb/advancements/recipes/dabomb/dynamite.json
@@ -38,6 +40,7 @@ d0a0e2a33cbabfc2a9949607c4dbe92d3a59086c data/dabomb/advancements/recipes/dabomb
 f660ee6047c323139a47ac56ef8dad6d9fd2014c data/dabomb/recipes/bouncy_bomb.json
 92d9fbd3e5244de40cd3aeb5bb56363db8a69f6d data/dabomb/recipes/bouncy_dynamite.json
 e70f466527e1f8369618e23443a3df5dc5bb81ba data/dabomb/recipes/c4.json
+88161aeda93b164d879b9e8ac88e60db9c3cafa9 data/dabomb/recipes/cluster_bomb.json
 763ac2fd2c32bcdf07e51694c2c40626fd5c8c89 data/dabomb/recipes/dirt_bomb.json
 ad3bbe5e163e61d258658a07202a91be81d3ff9b data/dabomb/recipes/dry_bomb.json
 aeb99527174fff2bf19d39d08be1da9849cbcc29 data/dabomb/recipes/dynamite.json

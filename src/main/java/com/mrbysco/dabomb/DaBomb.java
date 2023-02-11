@@ -3,6 +3,7 @@ package com.mrbysco.dabomb;
 import com.mojang.logging.LogUtils;
 import com.mrbysco.dabomb.client.ClientHandler;
 import com.mrbysco.dabomb.config.BombConfig;
+import com.mrbysco.dabomb.handler.AIHandler;
 import com.mrbysco.dabomb.handler.ExplosionHandler;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.world.item.CreativeModeTab;
@@ -31,12 +32,14 @@ public class DaBomb {
 	public DaBomb() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BombConfig.commonSpec);
+		eventBus.register(BombConfig.class);
 
 		BombRegistry.ITEMS.register(eventBus);
 		BombRegistry.ENTITIES.register(eventBus);
 		BombRegistry.SOUND_EVENTS.register(eventBus);
 
 		MinecraftForge.EVENT_BUS.addListener(ExplosionHandler::onDetonate);
+		MinecraftForge.EVENT_BUS.register(new AIHandler());
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			eventBus.addListener(ClientHandler::registerItemColors);

@@ -9,6 +9,8 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
+
 public class ClientHandler {
 	public static void registerItemColors(final ColorHandlerEvent.Item event) {
 		ItemColors itemColors = event.getItemColors();
@@ -16,22 +18,13 @@ public class ClientHandler {
 	}
 
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-		for (RegistryObject<EntityType<?>> object : BombRegistry.ENTITIES.getEntries()) {
-			event.registerEntityRenderer((EntityType<? extends ThrowableItemProjectile>) object.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
+		List<EntityType<?>> specialTypes = List.of(BombRegistry.BOMB_FRAGMENT.get());
+		for (RegistryObject<EntityType<?>> registryObject : BombRegistry.ENTITIES.getEntries()) {
+			if (!specialTypes.contains(registryObject.get()))
+				event.registerEntityRenderer((EntityType<? extends ThrowableItemProjectile>) registryObject.get(), (context) ->
+						new ThrownItemRenderer<>(context, 1.0F, true));
 		}
-//		event.registerEntityRenderer(BombRegistry.BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.BOUNCY_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.STICKY_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.BOMB_FISH.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.DIRT_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.WATER_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.LAVA_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.DRY_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.BEE_BOMB.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.C4_ENTITY.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//
-//		event.registerEntityRenderer(BombRegistry.DYNAMITE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.BOUNCY_DYNAMITE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-//		event.registerEntityRenderer(BombRegistry.STICKY_DYNAMITE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
+		event.registerEntityRenderer(BombRegistry.BOMB_FRAGMENT.get(), (context) ->
+				new ThrownItemRenderer<>(context, 0.5F, true));
 	}
 }

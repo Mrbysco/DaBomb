@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:gunpowder"
+    },
+    "E": {
+      "item": "dabomb:bomb"
+    }
+  },
+  "result": {
+    "item": "dabomb:cluster_bomb"
+  }
+}
