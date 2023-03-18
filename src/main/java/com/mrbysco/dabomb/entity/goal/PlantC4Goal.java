@@ -16,11 +16,11 @@ import java.util.List;
 
 public class PlantC4Goal extends Goal {
 	private LivingEntity target;
-	private Mob bomberMob;
+	private final Mob bomberMob;
 	private int obstructionTick = 0;
 	private int plantingTicker = 20;
 
-	private BlockPos obsPos = null;
+	private final BlockPos obsPos = null;
 
 	public PlantC4Goal(Mob demolitionMob) {
 		this.bomberMob = demolitionMob;

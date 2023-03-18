@@ -145,8 +145,7 @@ public class FluidExplosion extends Explosion {
 						}
 
 						entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
-						if (entity instanceof Player) {
-							Player player = (Player) entity;
+						if (entity instanceof Player player) {
 							if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
 								this.hitPlayers.put(player, new Vec3(d5 * d10, d7 * d10, d9 * d10));
 							}
