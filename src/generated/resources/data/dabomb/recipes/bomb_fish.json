@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "tag": "forge:gunpowder"
+    },
+    "P": {
+      "item": "minecraft:pufferfish"
+    },
+    "S": {
+      "tag": "forge:sand"
+    }
+  },
   "pattern": [
     " P ",
     "GSG",
     " G "
   ],
-  "key": {
-    "G": {
-      "tag": "forge:gunpowder"
-    },
-    "S": {
-      "tag": "forge:sand"
-    },
-    "P": {
-      "item": "minecraft:pufferfish"
-    }
-  },
   "result": {
-    "item": "dabomb:bomb_fish",
-    "count": 2
+    "count": 2,
+    "item": "dabomb:bomb_fish"
   }
 }

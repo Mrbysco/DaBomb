@@ -1,32 +1,32 @@
 {
-  "bomb_shoot": {
-    "subtitle": "dabomb.subtitle.bomb_shoot",
-    "sounds": [
-      "random/bow"
-    ]
-  },
-  "dynamite_shoot": {
-    "subtitle": "dabomb.subtitle.dynamite_shoot",
-    "sounds": [
-      "random/bow"
-    ]
-  },
-  "c4_shoot": {
-    "subtitle": "dabomb.subtitle.c4_shoot",
-    "sounds": [
-      "random/bow"
-    ]
-  },
-  "bomb_planted": {
-    "subtitle": "dabomb.subtitle.bomb_planted",
-    "sounds": [
-      "dabomb:bomb_planted"
-    ]
-  },
   "bomb_defused": {
-    "subtitle": "dabomb.subtitle.bomb_defused",
     "sounds": [
       "dabomb:bomb_defused"
-    ]
+    ],
+    "subtitle": "dabomb.subtitle.bomb_defused"
+  },
+  "bomb_planted": {
+    "sounds": [
+      "dabomb:bomb_planted"
+    ],
+    "subtitle": "dabomb.subtitle.bomb_planted"
+  },
+  "bomb_shoot": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "dabomb.subtitle.bomb_shoot"
+  },
+  "c4_shoot": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "dabomb.subtitle.c4_shoot"
+  },
+  "dynamite_shoot": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "dabomb.subtitle.dynamite_shoot"
   }
 }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " G ",
-    "GLG",
-    " G "
-  ],
   "key": {
     "G": {
       "tag": "forge:gunpowder"
@@ -13,6 +8,11 @@
       "item": "minecraft:lava_bucket"
     }
   },
+  "pattern": [
+    " G ",
+    "GLG",
+    " G "
+  ],
   "result": {
     "item": "dabomb:lava_bomb"
   }

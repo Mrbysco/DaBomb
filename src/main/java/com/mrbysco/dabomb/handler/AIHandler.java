@@ -8,6 +8,7 @@ import com.mrbysco.dabomb.item.C4Item;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -26,20 +27,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class AIHandler {
 	private static final Map<EntityType<?>, List<BombData>> bombermanMap = new HashMap<>();
 
 	@SubscribeEvent
-	public void onEntityCreation(EntityJoinWorldEvent event) {
-		if (!event.getWorld().isClientSide() && BombConfig.COMMON.enableBomberman.get()) {
+	public void onEntityCreation(EntityJoinLevelEvent event) {
+		if (!event.getLevel().isClientSide() && BombConfig.COMMON.enableBomberman.get()) {
 			if (event.loadedFromDisk()) return;
 
 			Entity entity = event.getEntity();
 			if (entity instanceof Mob mob) {
-				Random random = mob.getRandom();
+				RandomSource random = mob.getRandom();
 				EntityType<?> entityType = mob.getType();
 				if (bombermanMap.containsKey(entityType)) {
 					List<BombData> data = bombermanMap.get(entityType);
@@ -84,7 +84,7 @@ public class AIHandler {
 							return;
 						}
 						ResourceLocation registry = new ResourceLocation(values[0]);
-						EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(registry);
+						EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(registry);
 						List<BombData> dataList = bomberMap.getOrDefault(entityType, new ArrayList<>());
 
 						Supplier<Item> itemSupplier = getItemForName(values[1]);

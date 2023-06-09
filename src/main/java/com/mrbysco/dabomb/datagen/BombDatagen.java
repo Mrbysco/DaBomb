@@ -17,9 +17,9 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
@@ -33,12 +33,12 @@ public class BombDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(new Recipes(generator));
+			generator.addProvider(true, new Recipes(generator));
 		}
 		if (event.includeClient()) {
-			generator.addProvider(new Language(generator));
-			generator.addProvider(new SoundDefinitions(generator, helper));
-			generator.addProvider(new ItemModels(generator, helper));
+			generator.addProvider(true, new Language(generator));
+			generator.addProvider(true, new SoundDefinitions(generator, helper));
+			generator.addProvider(true, new ItemModels(generator, helper));
 		}
 	}
 
@@ -251,9 +251,8 @@ public class BombDatagen {
 		@Override
 		protected void registerModels() {
 			BombRegistry.ITEMS.getEntries().stream()
-					.map(RegistryObject::get)
 					.forEach(item -> {
-						String path = Objects.requireNonNull(item.getRegistryName()).getPath();
+						String path = Objects.requireNonNull(item.getId()).getPath();
 						if (path.equals("water_bomb")) {
 							withExistingParent(path, mcLoc("item/generated"))
 									.texture("layer0", modLoc(ITEM_FOLDER + "/" + "fluid_bomb_overlay"))

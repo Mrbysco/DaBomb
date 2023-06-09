@@ -158,8 +158,8 @@ public class FluidExplosion extends Explosion {
 
 	@Override
 	public void finalizeExplosion(boolean spawnParticles) {
-		if (this.level.isClientSide) {
-			this.level.playLocalSound(this.x, this.y, this.z, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F, false);
+		if (!this.level.isClientSide) {
+			this.level.playSound(null, new BlockPos(this.x, this.y, this.z), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
 		}
 
 		if (spawnParticles) {

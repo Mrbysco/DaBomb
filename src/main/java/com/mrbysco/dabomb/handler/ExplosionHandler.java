@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 
@@ -38,7 +38,7 @@ import java.util.List;
 public class ExplosionHandler {
 	public static void onDetonate(ExplosionEvent.Detonate event) {
 		final Explosion explosion = event.getExplosion();
-		final Level level = event.getWorld();
+		final Level level = event.getLevel();
 		List<BlockPos> affectedBlocks = event.getAffectedBlocks();
 		List<Entity> affectedEntities = event.getAffectedEntities();
 		if (!level.isClientSide) {
@@ -68,8 +68,8 @@ public class ExplosionHandler {
 			} else if (explosion.getExploder() instanceof DryBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
-					if (state.getBlock() instanceof LiquidBlock) {
-						level.removeBlock(pos, false);
+					if (state.getBlock() instanceof LiquidBlock && state.getMaterial().isReplaceable()) {
+						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 					} else {
 						if (state.getBlock() instanceof SimpleWaterloggedBlock waterloggedBlock) {
 							waterloggedBlock.pickupBlock(level, pos, state);
