@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " G ",
-    "GWG",
-    " G "
-  ],
   "key": {
     "G": {
       "tag": "forge:gunpowder"
@@ -13,6 +8,11 @@
       "item": "minecraft:water_bucket"
     }
   },
+  "pattern": [
+    " G ",
+    "GWG",
+    " G "
+  ],
   "result": {
     "item": "dabomb:water_bomb"
   }

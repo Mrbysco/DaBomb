@@ -35,7 +35,7 @@ public class DaBomb {
 		eventBus.register(BombConfig.class);
 
 		BombRegistry.ITEMS.register(eventBus);
-		BombRegistry.ENTITIES.register(eventBus);
+		BombRegistry.ENTITY_TYPES.register(eventBus);
 		BombRegistry.SOUND_EVENTS.register(eventBus);
 
 		MinecraftForge.EVENT_BUS.addListener(ExplosionHandler::onDetonate);

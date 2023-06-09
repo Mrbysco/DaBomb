@@ -1,26 +1,26 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "tag": "forge:gunpowder"
+    },
+    "H": {
+      "item": "minecraft:honey_bottle"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "tag": "forge:sand"
+    }
+  },
   "pattern": [
     " R ",
     "GSG",
     "GHG"
   ],
-  "key": {
-    "G": {
-      "tag": "forge:gunpowder"
-    },
-    "S": {
-      "tag": "forge:sand"
-    },
-    "R": {
-      "tag": "forge:dusts/redstone"
-    },
-    "H": {
-      "item": "minecraft:honey_bottle"
-    }
-  },
   "result": {
-    "item": "dabomb:c4",
-    "count": 2
+    "count": 2,
+    "item": "dabomb:c4"
   }
 }

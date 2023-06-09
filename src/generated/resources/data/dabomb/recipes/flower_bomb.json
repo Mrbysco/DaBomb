@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "dabomb:bomb"
+    },
+    "F": {
+      "tag": "minecraft:small_flowers"
+    }
+  },
   "pattern": [
     " F ",
     "FBF",
     " F "
   ],
-  "key": {
-    "F": {
-      "tag": "minecraft:small_flowers"
-    },
-    "B": {
-      "item": "dabomb:bomb"
-    }
-  },
   "result": {
     "item": "dabomb:flower_bomb"
   }
