@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -45,7 +44,7 @@ public class ExplosionHandler {
 			if (explosion.getExploder() instanceof DirtBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
-					if (state.isAir() || state.getMaterial().isReplaceable()) {
+					if (state.isAir() || state.canBeReplaced()) {
 						level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
 					}
 				}
@@ -61,15 +60,15 @@ public class ExplosionHandler {
 			} else if (explosion.getExploder() instanceof LavaBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
-					if (state.isAir() || state.getMaterial().isReplaceable()) {
+					if (state.isAir() || state.canBeReplaced()) {
 						level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
 					}
 				}
 			} else if (explosion.getExploder() instanceof DryBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
-					if (state.getBlock() instanceof LiquidBlock) {
-						level.removeBlock(pos, false);
+					if (state.getBlock() instanceof LiquidBlock && state.canBeReplaced()) {
+						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 					} else {
 						if (state.getBlock() instanceof SimpleWaterloggedBlock waterloggedBlock) {
 							waterloggedBlock.pickupBlock(level, pos, state);
@@ -117,7 +116,7 @@ public class ExplosionHandler {
 						});
 					}
 				}
-			} else if (explosion.getExploder() instanceof EnderBomb) {
+			} else if (explosion.getExploder() instanceof EnderBomb bomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (LivingEntity livingEntity : livingEntities) {
 					double targetX = livingEntity.getX() + (level.random.nextDouble() - 0.5D) * 64.0D;
@@ -125,7 +124,7 @@ public class ExplosionHandler {
 					double targetZ = livingEntity.getZ() + (level.random.nextDouble() - 0.5D) * 64.0D;
 					livingEntity.randomTeleport(targetX, targetY, targetZ, true);
 					level.playSound((Player) null, targetX, targetY, targetZ, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
-					livingEntity.hurt(DamageSource.explosion(explosion), 2.0F);
+					livingEntity.hurt(bomb.damageSources().explosion(explosion), 2.0F);
 					affectedEntities.remove(livingEntity);
 				}
 			}

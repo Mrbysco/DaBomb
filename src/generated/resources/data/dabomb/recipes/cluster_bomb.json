@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "E": {
       "item": "dabomb:bomb"
@@ -14,5 +15,6 @@
   ],
   "result": {
     "item": "dabomb:cluster_bomb"
-  }
+  },
+  "show_notification": true
 }

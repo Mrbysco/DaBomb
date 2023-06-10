@@ -37,8 +37,8 @@ public class FluidExplosion extends Explosion {
 		this.fluidPredicate = fluidPredicate;
 	}
 
-	public static float getSeenPercent(Vec3 p_46065_, Entity p_46066_) {
-		AABB aabb = p_46066_.getBoundingBox();
+	public static float getSeenPercent(Vec3 p_46065_, Entity boundingBox) {
+		AABB aabb = boundingBox.getBoundingBox();
 		double d0 = 1.0D / ((aabb.maxX - aabb.minX) * 2.0D + 1.0D);
 		double d1 = 1.0D / ((aabb.maxY - aabb.minY) * 2.0D + 1.0D);
 		double d2 = 1.0D / ((aabb.maxZ - aabb.minZ) * 2.0D + 1.0D);
@@ -55,7 +55,7 @@ public class FluidExplosion extends Explosion {
 						double d9 = Mth.lerp(d6, aabb.minY, aabb.maxY);
 						double d10 = Mth.lerp(d7, aabb.minZ, aabb.maxZ);
 						Vec3 vec3 = new Vec3(d8 + d3, d9, d10 + d4);
-						if (p_46066_.level.clip(new ClipContext(vec3, p_46065_, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, p_46066_)).getType() == HitResult.Type.MISS) {
+						if (boundingBox.level().clip(new ClipContext(vec3, p_46065_, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, boundingBox)).getType() == HitResult.Type.MISS) {
 							++i;
 						}
 
@@ -72,7 +72,7 @@ public class FluidExplosion extends Explosion {
 
 	@Override
 	public void explode() {
-		this.level.gameEvent(this.source, GameEvent.EXPLODE, new BlockPos(this.x, this.y, this.z));
+		this.level.gameEvent(this.source, GameEvent.EXPLODE, BlockPos.containing(this.x, this.y, this.z));
 		Set<BlockPos> set = Sets.newHashSet();
 		for (int i = 0; i < 16; ++i) {
 			for (int j = 0; j < 16; ++j) {
@@ -91,7 +91,7 @@ public class FluidExplosion extends Explosion {
 						double z = this.z;
 
 						for (float f1 = 0.3F; f > 0.0F; f -= 0.22500001F) {
-							BlockPos blockpos = new BlockPos(x, y, z);
+							BlockPos blockpos = BlockPos.containing(x, y, z);
 							BlockState blockstate = this.level.getBlockState(blockpos);
 							FluidState fluidstate = this.level.getFluidState(blockpos);
 							if (!this.level.isInWorldBounds(blockpos)) {
@@ -158,8 +158,8 @@ public class FluidExplosion extends Explosion {
 
 	@Override
 	public void finalizeExplosion(boolean spawnParticles) {
-		if (this.level.isClientSide) {
-			this.level.playLocalSound(this.x, this.y, this.z, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F, false);
+		if (!this.level.isClientSide) {
+			this.level.playSound(null, BlockPos.containing(this.x, this.y, this.z), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
 		}
 
 		if (spawnParticles) {

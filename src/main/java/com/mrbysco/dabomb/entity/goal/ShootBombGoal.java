@@ -103,7 +103,7 @@ public class ShootBombGoal extends Goal {
 	}
 
 	private void shootBomb() {
-		Level level = bomber.level;
+		Level level = bomber.level();
 		if (!level.isClientSide) {
 			if (projectile.create(level) instanceof ThrowableItemProjectile bomb) {
 				level.playSound((Player) null, bomber.getX(), bomber.getY(), bomber.getZ(),

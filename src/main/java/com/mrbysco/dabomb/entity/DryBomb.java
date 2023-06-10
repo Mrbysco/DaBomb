@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -50,7 +51,7 @@ public class DryBomb extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -69,28 +70,28 @@ public class DryBomb extends ThrowableItemProjectile {
 			ParticleOptions particleoptions = this.getParticle();
 
 			for (int i = 0; i < 8; ++i) {
-				this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}
 
 	@Override
 	public void tick() {
-		if (!this.level.isClientSide && !level.getFluidState(blockPosition()).isEmpty()) {
+		if (!this.level().isClientSide && !this.level().getFluidState(blockPosition()).isEmpty()) {
 			this.explode();
-			this.level.broadcastEntityEvent(this, (byte) 3);
+			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
 
 		super.tick();
-		if (this.level.isClientSide) {
-			this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
+		if (this.level().isClientSide) {
+			this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
 		}
 
 		if (tickCount >= 100) {
-			if (!this.level.isClientSide) {
+			if (!this.level().isClientSide) {
 				this.explode();
-				this.level.broadcastEntityEvent(this, (byte) 3);
+				this.level().broadcastEntityEvent(this, (byte) 3);
 				this.discard();
 			}
 		}
@@ -114,11 +115,11 @@ public class DryBomb extends ThrowableItemProjectile {
 
 		Direction direction = hitBlock.getDirection();
 		BlockPos blockPos = hitBlock.getBlockPos();
-		BlockState blockstate = level.getBlockState(blockPos);
+		BlockState blockstate = this.level().getBlockState(blockPos);
 
-		if (blockstate.getMaterial().blocksMotion()) {
-			if (!level.isClientSide && bounceCount < 6) {
-				this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
+		if (blockstate.blocksMotion()) {
+			if (!level().isClientSide && bounceCount < 6) {
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
 			}
 
 			if (direction == Direction.EAST || direction == Direction.WEST)
@@ -155,14 +156,14 @@ public class DryBomb extends ThrowableItemProjectile {
 		this.shoot((double) f, (double) f1, (double) f2, velocity, inaccuracy);
 		this.setDeltaMovement(this.getDeltaMovement().multiply(0.75F, 0.25F, 0.75F));
 		Vec3 vec3 = entity.getDeltaMovement();
-		this.setDeltaMovement(this.getDeltaMovement().add(vec3.x, entity.isOnGround() ? 0.0D : vec3.y, vec3.z));
+		this.setDeltaMovement(this.getDeltaMovement().add(vec3.x, entity.onGround() ? 0.0D : vec3.y, vec3.z));
 	}
 
 	protected void explode() {
-		FluidExplosion explosion = new FluidExplosion(level, this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
-				state -> !state.isEmpty(), Explosion.BlockInteraction.NONE);
+		FluidExplosion explosion = new FluidExplosion(this.level(), this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
+				state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
 		explosion.explode();
-		explosion.finalizeExplosion(true);
+		explosion.finalizeExplosion(false);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[46,)"
 issueTrackerURL="https://github.com/Mrbysco/DaBomb/issues"
 license="MIT"
 
@@ -13,9 +13,10 @@ description='''
 This mod will blow your mind (and caves) (and house)
 '''
 credits="Darkosto for the sounds / idea"
+
 [[dependencies.dabomb]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.2,1.20)"
+versionRange="[1.20,1.21)"
 ordering="NONE"
 side="BOTH"

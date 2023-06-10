@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:bouncy_bomb"
+        "recipe": "dabomb:sticky_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "dabomb:bouncy_bomb"
+      "dabomb:sticky_bomb"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

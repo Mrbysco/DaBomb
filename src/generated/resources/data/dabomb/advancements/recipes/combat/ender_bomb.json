@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:c4"
+        "recipe": "dabomb:ender_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,8 @@
   ],
   "rewards": {
     "recipes": [
-      "dabomb:c4"
+      "dabomb:ender_bomb"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

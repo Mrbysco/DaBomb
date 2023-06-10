@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:ender_bomb"
+        "recipe": "dabomb:bomb_fish"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,8 @@
   ],
   "rewards": {
     "recipes": [
-      "dabomb:ender_bomb"
+      "dabomb:bomb_fish"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

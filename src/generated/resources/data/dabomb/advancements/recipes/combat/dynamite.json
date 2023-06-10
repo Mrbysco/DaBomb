@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bomb": {
+    "has_gunpowder": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "dabomb:bomb"
-            ]
+            "tag": "forge:gunpowder"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:sticky_bomb"
+        "recipe": "dabomb:dynamite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_bomb",
+      "has_gunpowder",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "dabomb:sticky_bomb"
+      "dabomb:dynamite"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

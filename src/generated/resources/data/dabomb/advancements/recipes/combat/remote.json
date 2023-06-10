@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bomb": {
+    "has_redstone": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "dabomb:bomb"
-            ]
+            "tag": "forge:dusts/redstone"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:dry_bomb"
+        "recipe": "dabomb:remote"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_bomb",
+      "has_redstone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "dabomb:dry_bomb"
+      "dabomb:remote"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

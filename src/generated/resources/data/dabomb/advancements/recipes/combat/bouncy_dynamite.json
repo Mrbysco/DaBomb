@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gunpowder": {
+    "has_dynamite": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:gunpowder"
+            "items": [
+              "dabomb:dynamite"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:bee_bomb"
+        "recipe": "dabomb:bouncy_dynamite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_gunpowder",
+      "has_dynamite",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "dabomb:bee_bomb"
+      "dabomb:bouncy_dynamite"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

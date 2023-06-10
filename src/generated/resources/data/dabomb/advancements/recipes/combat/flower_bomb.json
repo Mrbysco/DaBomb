@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dynamite": {
+    "has_bomb": {
       "conditions": {
         "items": [
           {
             "items": [
-              "dabomb:dynamite"
+              "dabomb:bomb"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:bouncy_dynamite"
+        "recipe": "dabomb:flower_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dynamite",
+      "has_bomb",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "dabomb:bouncy_dynamite"
+      "dabomb:flower_bomb"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

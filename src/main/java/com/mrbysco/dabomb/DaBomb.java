@@ -6,8 +6,6 @@ import com.mrbysco.dabomb.config.BombConfig;
 import com.mrbysco.dabomb.handler.AIHandler;
 import com.mrbysco.dabomb.handler.ExplosionHandler;
 import com.mrbysco.dabomb.registry.BombRegistry;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,12 +20,6 @@ import org.slf4j.Logger;
 public class DaBomb {
 	public static final String MOD_ID = "dabomb";
 	public static final Logger LOGGER = LogUtils.getLogger();
-	public static final CreativeModeTab tab = new CreativeModeTab(MOD_ID) {
-		@Override
-		public ItemStack makeIcon() {
-			return new ItemStack(BombRegistry.BOMB_ITEM.get());
-		}
-	};
 
 	public DaBomb() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -37,6 +29,7 @@ public class DaBomb {
 		BombRegistry.ITEMS.register(eventBus);
 		BombRegistry.ENTITY_TYPES.register(eventBus);
 		BombRegistry.SOUND_EVENTS.register(eventBus);
+		BombRegistry.CREATIVE_MODE_TABS.register(eventBus);
 
 		MinecraftForge.EVENT_BUS.addListener(ExplosionHandler::onDetonate);
 		MinecraftForge.EVENT_BUS.register(new AIHandler());

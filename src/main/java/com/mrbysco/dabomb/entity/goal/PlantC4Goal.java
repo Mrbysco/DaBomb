@@ -35,9 +35,9 @@ public class PlantC4Goal extends Goal {
 				!(bomberMob.getMainHandItem().getItem() instanceof ThrowableItem))
 			return false;
 
-		BlockPos headPos = new BlockPos(bomberMob.getX(), bomberMob.getEyeY(), bomberMob.getZ());
+		BlockPos headPos = BlockPos.containing(bomberMob.getX(), bomberMob.getEyeY(), bomberMob.getZ());
 		BlockPos relativePos = headPos.relative(bomberMob.getDirection());
-		if (bomberMob.level.getBlockState(relativePos).isAir()) {
+		if (bomberMob.level().getBlockState(relativePos).isAir()) {
 			obstructionTick = 0;
 		} else {
 			obstructionTick++;
@@ -81,7 +81,7 @@ public class PlantC4Goal extends Goal {
 	}
 
 	private void plantC4() {
-		Level level = bomberMob.level;
+		Level level = bomberMob.level();
 		if (!level.isClientSide) {
 			C4 c4 = BombRegistry.C4_ENTITY.get().create(level);
 			if (c4 != null) {
@@ -100,7 +100,7 @@ public class PlantC4Goal extends Goal {
 	}
 
 	private void detonateC4() {
-		Level level = bomberMob.level;
+		Level level = bomberMob.level();
 		List<C4> c4s = level.getEntitiesOfClass(C4.class, bomberMob.getBoundingBox().inflate(64D))
 				.stream().filter(c4 -> c4.getOwner() != null && c4.getOwner().getUUID().equals(bomberMob.getUUID())).toList();
 		if (!c4s.isEmpty()) {

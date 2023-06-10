@@ -21,56 +21,63 @@ import com.mrbysco.dabomb.entity.WaterBomb;
 import com.mrbysco.dabomb.item.C4Item;
 import com.mrbysco.dabomb.item.RemoteItem;
 import com.mrbysco.dabomb.item.ThrowableItem;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 public class BombRegistry {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DaBomb.MOD_ID);
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, DaBomb.MOD_ID);
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, DaBomb.MOD_ID);
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, DaBomb.MOD_ID);
 
 	//Bombs
-	public static final RegistryObject<Item> BOMB_ITEM = ITEMS.register("bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> BOMB_ITEM = ITEMS.register("bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> BOUNCY_BOMB_ITEM = ITEMS.register("bouncy_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> BOUNCY_BOMB_ITEM = ITEMS.register("bouncy_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.BOUNCY_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> STICKY_BOMB_ITEM = ITEMS.register("sticky_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> STICKY_BOMB_ITEM = ITEMS.register("sticky_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.STICKY_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> BOMB_FISH_ITEM = ITEMS.register("bomb_fish", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> BOMB_FISH_ITEM = ITEMS.register("bomb_fish", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.BOMB_FISH::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> DIRT_BOMB_ITEM = ITEMS.register("dirt_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> DIRT_BOMB_ITEM = ITEMS.register("dirt_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.DIRT_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -10.0F, 0.65F, 1.0F));
-	public static final RegistryObject<Item> DRY_BOMB_ITEM = ITEMS.register("dry_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> DRY_BOMB_ITEM = ITEMS.register("dry_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.DRY_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -10.0F, 0.65F, 1.0F));
-	public static final RegistryObject<Item> WATER_BOMB_ITEM = ITEMS.register("water_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> WATER_BOMB_ITEM = ITEMS.register("water_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.WATER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -10.0F, 0.65F, 1.0F));
-	public static final RegistryObject<Item> LAVA_BOMB_ITEM = ITEMS.register("lava_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> LAVA_BOMB_ITEM = ITEMS.register("lava_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.LAVA_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -10.0F, 0.65F, 1.0F));
-	public static final RegistryObject<Item> BEE_BOMB_ITEM = ITEMS.register("bee_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> BEE_BOMB_ITEM = ITEMS.register("bee_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.BEE_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> FLOWER_BOMB_ITEM = ITEMS.register("flower_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> FLOWER_BOMB_ITEM = ITEMS.register("flower_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.FLOWER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> ENDER_BOMB_ITEM = ITEMS.register("ender_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> ENDER_BOMB_ITEM = ITEMS.register("ender_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.ENDER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> CLUSTER_BOMB_ITEM = ITEMS.register("cluster_bomb", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> CLUSTER_BOMB_ITEM = ITEMS.register("cluster_bomb", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.CLUSTER_BOMB::get, BombRegistry.BOMB_SHOOT, 8, -20.0F, 0.45F, 1.0F));
 	//Dynamite
-	public static final RegistryObject<Item> DYNAMITE_ITEM = ITEMS.register("dynamite", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> DYNAMITE_ITEM = ITEMS.register("dynamite", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.DYNAMITE::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> STICKY_DYNAMITE_ITEM = ITEMS.register("sticky_dynamite", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> STICKY_DYNAMITE_ITEM = ITEMS.register("sticky_dynamite", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.STICKY_DYNAMITE::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> BOUNCY_DYNAMITE_ITEM = ITEMS.register("bouncy_dynamite", () -> new ThrowableItem(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> BOUNCY_DYNAMITE_ITEM = ITEMS.register("bouncy_dynamite", () -> new ThrowableItem(new Item.Properties(),
 			BombRegistry.BOUNCY_DYNAMITE::get, BombRegistry.DYNAMITE_SHOOT, 14, -20.0F, 0.45F, 1.0F));
 	//C4 + Remote
-	public static final RegistryObject<Item> C4_ITEM = ITEMS.register("c4", () -> new C4Item(new Item.Properties().tab(DaBomb.tab),
+	public static final RegistryObject<Item> C4_ITEM = ITEMS.register("c4", () -> new C4Item(new Item.Properties(),
 			BombRegistry.C4_ENTITY::get, BombRegistry.C4_SHOOT, 14, -20.0F, 0.45F, 1.0F));
-	public static final RegistryObject<Item> REMOTE = ITEMS.register("remote", () -> new RemoteItem(new Item.Properties().tab(DaBomb.tab)));
+	public static final RegistryObject<Item> REMOTE = ITEMS.register("remote", () -> new RemoteItem(new Item.Properties()));
 
 	public static final RegistryObject<EntityType<Bomb>> BOMB = ENTITY_TYPES.register("bomb", () ->
 			EntityType.Builder.<Bomb>of(Bomb::new, MobCategory.MISC)
@@ -142,14 +149,22 @@ public class BombRegistry {
 					.setCustomClientFactory(C4::new).build("c4"));
 
 	public static final RegistryObject<SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
-			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_shoot")));
+			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_shoot")));
 	public static final RegistryObject<SoundEvent> DYNAMITE_SHOOT = SOUND_EVENTS.register("dynamite_shoot", () ->
-			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "dynamite_shoot")));
+			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "dynamite_shoot")));
 	public static final RegistryObject<SoundEvent> C4_SHOOT = SOUND_EVENTS.register("c4_shoot", () ->
-			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "c4_shoot")));
+			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "c4_shoot")));
 
 	public static final RegistryObject<SoundEvent> BOMB_PLANTED = SOUND_EVENTS.register("bomb_planted", () ->
-			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_planted")));
+			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_planted")));
 	public static final RegistryObject<SoundEvent> BOMB_DEFUSED = SOUND_EVENTS.register("bomb_defused", () ->
-			new SoundEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_defused")));
+			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_defused")));
+
+	public static final RegistryObject<CreativeModeTab> BOMB_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
+			.icon(() -> BombRegistry.BOMB_ITEM.get().getDefaultInstance())
+			.title(Component.translatable("itemGroup.dabomb"))
+			.displayItems((parameters, output) -> {
+				List<ItemStack> stacks = BombRegistry.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
+				output.acceptAll(stacks);
+			}).build());
 }

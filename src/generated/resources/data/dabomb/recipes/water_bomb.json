@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "G": {
       "tag": "forge:gunpowder"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "dabomb:water_bomb"
-  }
+  },
+  "show_notification": true
 }

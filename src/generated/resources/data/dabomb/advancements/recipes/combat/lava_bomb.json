@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bomb": {
+    "has_lava_bucket": {
       "conditions": {
         "items": [
           {
             "items": [
-              "dabomb:bomb"
+              "minecraft:lava_bucket"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:dirt_bomb"
+        "recipe": "dabomb:lava_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_bomb",
+      "has_lava_bucket",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "dabomb:dirt_bomb"
+      "dabomb:lava_bomb"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

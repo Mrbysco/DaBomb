@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:flower_bomb"
+        "recipe": "dabomb:bouncy_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "dabomb:flower_bomb"
+      "dabomb:bouncy_bomb"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
