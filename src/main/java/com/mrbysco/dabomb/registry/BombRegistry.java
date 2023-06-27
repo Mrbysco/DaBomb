@@ -28,6 +28,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
@@ -162,6 +163,7 @@ public class BombRegistry {
 
 	public static final RegistryObject<CreativeModeTab> BOMB_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
 			.icon(() -> BombRegistry.BOMB_ITEM.get().getDefaultInstance())
+			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.dabomb"))
 			.displayItems((parameters, output) -> {
 				List<ItemStack> stacks = BombRegistry.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
