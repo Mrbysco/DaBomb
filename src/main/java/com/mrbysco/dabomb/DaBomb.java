@@ -6,14 +6,13 @@ import com.mrbysco.dabomb.config.BombConfig;
 import com.mrbysco.dabomb.handler.AIHandler;
 import com.mrbysco.dabomb.handler.ExplosionHandler;
 import com.mrbysco.dabomb.registry.BombRegistry;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 @Mod(DaBomb.MOD_ID)
@@ -31,12 +30,12 @@ public class DaBomb {
 		BombRegistry.SOUND_EVENTS.register(eventBus);
 		BombRegistry.CREATIVE_MODE_TABS.register(eventBus);
 
-		MinecraftForge.EVENT_BUS.addListener(ExplosionHandler::onDetonate);
-		MinecraftForge.EVENT_BUS.register(new AIHandler());
+		NeoForge.EVENT_BUS.addListener(ExplosionHandler::onDetonate);
+		NeoForge.EVENT_BUS.register(new AIHandler());
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+		if (FMLEnvironment.dist.isClient()) {
 			eventBus.addListener(ClientHandler::registerItemColors);
 			eventBus.addListener(ClientHandler::registerEntityRenders);
-		});
+		}
 	}
 }

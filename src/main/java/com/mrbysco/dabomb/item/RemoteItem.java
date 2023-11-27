@@ -21,7 +21,7 @@ public class RemoteItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		player.getCooldowns().addCooldown(this, 20);
-		level.playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+		level.playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
 		List<C4> c4s = level.getEntitiesOfClass(C4.class, player.getBoundingBox().inflate(64D))
 				.stream().filter(c4 -> c4.getOwner() != null && c4.getOwner().getUUID().equals(player.getUUID())).toList();

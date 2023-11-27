@@ -23,6 +23,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -120,7 +121,7 @@ public class FluidExplosion extends Explosion {
 		int j2 = Mth.floor(this.z - (double) f2 - 1.0D);
 		int j1 = Mth.floor(this.z + (double) f2 + 1.0D);
 		List<Entity> list = this.level.getEntities(this.source, new AABB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, list, f2);
+		EventHooks.onExplosionDetonate(this.level, this, list, f2);
 		Vec3 vec3 = new Vec3(this.x, this.y, this.z);
 
 		for (int i = 0; i < list.size(); ++i) {

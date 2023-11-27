@@ -2,43 +2,43 @@ package com.mrbysco.dabomb.config;
 
 import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.handler.AIHandler;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
 public class BombConfig {
 	public static class Common {
-		public final ForgeConfigSpec.DoubleValue beeBombRadius;
-		public final ForgeConfigSpec.IntValue beeAmount;
-		public final ForgeConfigSpec.DoubleValue bombRadius;
-		public final ForgeConfigSpec.DoubleValue bombFishRadius;
-		public final ForgeConfigSpec.DoubleValue bouncyBombRadius;
-		public final ForgeConfigSpec.DoubleValue dirtBombRadius;
-		public final ForgeConfigSpec.DoubleValue dryBombRadius;
-		public final ForgeConfigSpec.DoubleValue enderBombRadius;
-		public final ForgeConfigSpec.DoubleValue flowerBombRadius;
-		public final ForgeConfigSpec.DoubleValue flowerBombChance;
-		public final ForgeConfigSpec.DoubleValue flowerBombBeeChance;
-		public final ForgeConfigSpec.DoubleValue lavaBombRadius;
-		public final ForgeConfigSpec.DoubleValue stickyBombRadius;
-		public final ForgeConfigSpec.DoubleValue waterBombRadius;
-		public final ForgeConfigSpec.DoubleValue clusterBombRadius;
-		public final ForgeConfigSpec.DoubleValue bombFragmentRadius;
+		public final ModConfigSpec.DoubleValue beeBombRadius;
+		public final ModConfigSpec.IntValue beeAmount;
+		public final ModConfigSpec.DoubleValue bombRadius;
+		public final ModConfigSpec.DoubleValue bombFishRadius;
+		public final ModConfigSpec.DoubleValue bouncyBombRadius;
+		public final ModConfigSpec.DoubleValue dirtBombRadius;
+		public final ModConfigSpec.DoubleValue dryBombRadius;
+		public final ModConfigSpec.DoubleValue enderBombRadius;
+		public final ModConfigSpec.DoubleValue flowerBombRadius;
+		public final ModConfigSpec.DoubleValue flowerBombChance;
+		public final ModConfigSpec.DoubleValue flowerBombBeeChance;
+		public final ModConfigSpec.DoubleValue lavaBombRadius;
+		public final ModConfigSpec.DoubleValue stickyBombRadius;
+		public final ModConfigSpec.DoubleValue waterBombRadius;
+		public final ModConfigSpec.DoubleValue clusterBombRadius;
+		public final ModConfigSpec.DoubleValue bombFragmentRadius;
 
 
-		public final ForgeConfigSpec.DoubleValue bouncyDynamiteRadius;
-		public final ForgeConfigSpec.DoubleValue dynamiteRadius;
-		public final ForgeConfigSpec.DoubleValue stickyDynamiteRadius;
+		public final ModConfigSpec.DoubleValue bouncyDynamiteRadius;
+		public final ModConfigSpec.DoubleValue dynamiteRadius;
+		public final ModConfigSpec.DoubleValue stickyDynamiteRadius;
 
-		public final ForgeConfigSpec.DoubleValue c4Radius;
+		public final ModConfigSpec.DoubleValue c4Radius;
 
-		public final ForgeConfigSpec.BooleanValue enableBomberman;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> bomberman;
+		public final ModConfigSpec.BooleanValue enableBomberman;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> bomberman;
 
-		Common(ForgeConfigSpec.Builder builder) {
+		Common(ModConfigSpec.Builder builder) {
 			builder.comment("Bomb settings")
 					.push("Bomb");
 
@@ -156,11 +156,11 @@ public class BombConfig {
 		}
 	}
 
-	public static final ForgeConfigSpec commonSpec;
+	public static final ModConfigSpec commonSpec;
 	public static final Common COMMON;
 
 	static {
-		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
 		COMMON = specPair.getLeft();
 	}

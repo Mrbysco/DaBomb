@@ -2,10 +2,11 @@ package com.mrbysco.dabomb.datagen;
 
 import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.registry.BombRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -14,18 +15,18 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BombDatagen {
@@ -36,7 +37,7 @@ public class BombDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(true, new Recipes(packOutput));
+			generator.addProvider(true, new Recipes(packOutput, event.getLookupProvider()));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(true, new Language(packOutput));
@@ -46,79 +47,79 @@ public class BombDatagen {
 	}
 
 	private static class Recipes extends RecipeProvider {
-		public Recipes(PackOutput packOutput) {
-			super(packOutput);
+		public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(packOutput, lookupProvider);
 		}
 
 		@Override
-		protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+		protected void buildRecipes(RecipeOutput recipeOutput) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_ITEM.get(), 2)
 					.pattern(" G ").pattern("GSG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('S', Ingredient.of(Tags.Items.SAND))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.DIRT_BOMB_ITEM.get())
 					.pattern(" D ").pattern("DBD").pattern(" D ")
 					.define('D', Ingredient.of(ItemTags.DIRT))
 					.define('B', BombRegistry.BOMB_ITEM.get())
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.FLOWER_BOMB_ITEM.get())
 					.pattern(" F ").pattern("FBF").pattern(" F ")
 					.define('F', Ingredient.of(ItemTags.SMALL_FLOWERS))
 					.define('B', BombRegistry.BOMB_ITEM.get())
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.LAVA_BOMB_ITEM.get())
 					.pattern(" G ").pattern("GLG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('L', Items.LAVA_BUCKET)
 					.unlockedBy("has_lava_bucket", has(Items.LAVA_BUCKET))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.WATER_BOMB_ITEM.get())
 					.pattern(" G ").pattern("GWG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('W', Items.WATER_BUCKET)
 					.unlockedBy("has_water_bucket", has(Items.WATER_BUCKET))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_BOMB_ITEM.get())
 					.requires(BombRegistry.BOMB_ITEM.get()).requires(Items.HONEY_BOTTLE)
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_BOMB_ITEM.get())
 					.requires(BombRegistry.BOMB_ITEM.get()).requires(Ingredient.of(Tags.Items.SLIMEBALLS))
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.DRY_BOMB_ITEM.get())
 					.requires(BombRegistry.BOMB_ITEM.get()).requires(Items.SPONGE)
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_FISH_ITEM.get(), 2)
 					.pattern(" P ").pattern("GSG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('S', Ingredient.of(Tags.Items.SAND))
 					.define('P', Items.PUFFERFISH)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BEE_BOMB_ITEM.get(), 2)
 					.pattern("GBG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('B', Items.BEEHIVE)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.ENDER_BOMB_ITEM.get(), 2)
 					.pattern("GEG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('E', Ingredient.of(Tags.Items.ENDER_PEARLS))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.CLUSTER_BOMB_ITEM.get(), 1)
 					.pattern("GEG").pattern(" G ")
 					.define('G', Ingredient.of(Tags.Items.GUNPOWDER))
 					.define('E', Ingredient.of(BombRegistry.BOMB_ITEM.get()))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.DYNAMITE_ITEM.get(), 3)
 					.pattern(" # ").pattern("GSG").pattern("GGG")
@@ -126,15 +127,15 @@ public class BombDatagen {
 					.define('S', Ingredient.of(Tags.Items.SAND))
 					.define('#', Ingredient.of(Tags.Items.STRING))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_DYNAMITE_ITEM.get())
 					.requires(BombRegistry.DYNAMITE_ITEM.get()).requires(Items.HONEY_BOTTLE)
 					.unlockedBy("has_dynamite", has(BombRegistry.DYNAMITE_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_DYNAMITE_ITEM.get())
 					.requires(BombRegistry.DYNAMITE_ITEM.get()).requires(Ingredient.of(Tags.Items.SLIMEBALLS))
 					.unlockedBy("has_dynamite", has(BombRegistry.DYNAMITE_ITEM.get()))
-					.save(consumer);
+					.save(recipeOutput);
 
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.C4_ITEM.get(), 2)
 					.pattern(" R ").pattern("GSG").pattern("GHG")
@@ -143,13 +144,13 @@ public class BombDatagen {
 					.define('R', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
 					.define('H', Items.HONEY_BOTTLE)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.REMOTE.get(), 1)
 					.pattern(" RR").pattern("II ").pattern("II ")
 					.define('I', Ingredient.of(Tags.Items.INGOTS_IRON))
 					.define('R', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
 					.unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-					.save(consumer);
+					.save(recipeOutput);
 		}
 	}
 
@@ -206,7 +207,7 @@ public class BombDatagen {
 			this.addSubtitle(BombRegistry.BOMB_DEFUSED, "Bomb has been defused");
 		}
 
-		public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {
+		public void addSubtitle(Supplier<SoundEvent> sound, String name) {
 			this.addSubtitle(sound.get(), name);
 		}
 

@@ -7,6 +7,7 @@ import com.mrbysco.dabomb.entity.goal.ShootBombGoal;
 import com.mrbysco.dabomb.item.C4Item;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import com.mrbysco.dabomb.registry.BombRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -18,9 +19,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
@@ -84,10 +84,10 @@ public class AIHandler {
 							return;
 						}
 						ResourceLocation registry = new ResourceLocation(values[0]);
-						EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(registry);
+						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(registry);
 						List<BombData> dataList = bomberMap.getOrDefault(entityType, new ArrayList<>());
 
-						Supplier<Item> itemSupplier = getItemForName(values[1]);
+						Supplier<? extends Item> itemSupplier = getItemForName(values[1]);
 						double chance = NumberUtils.isParsable(values[2]) ? Double.parseDouble(values[2]) : 0;
 
 						dataList.add(new BombData(itemSupplier, chance));
@@ -101,7 +101,7 @@ public class AIHandler {
 		bombermanMap.putAll(bomberMap);
 	}
 
-	private static Supplier<Item> getItemForName(String name) {
+	private static Supplier<? extends Item> getItemForName(String name) {
 		return switch (name) {
 			default -> {
 				DaBomb.LOGGER.error("Invalid bomb {} in `bomberman` config", name);
@@ -126,7 +126,7 @@ public class AIHandler {
 		};
 	}
 
-	private record BombData(Supplier<Item> item, double chance) {
+	private record BombData(Supplier<? extends Item> item, double chance) {
 
 	}
 }

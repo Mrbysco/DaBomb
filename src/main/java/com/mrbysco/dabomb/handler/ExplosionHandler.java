@@ -10,6 +10,8 @@ import com.mrbysco.dabomb.entity.FlowerBomb;
 import com.mrbysco.dabomb.entity.LavaBomb;
 import com.mrbysco.dabomb.entity.WaterBomb;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -28,11 +30,10 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ExplosionHandler {
 	public static void onDetonate(ExplosionEvent.Detonate event) {
@@ -71,7 +72,7 @@ public class ExplosionHandler {
 						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 					} else {
 						if (state.getBlock() instanceof SimpleWaterloggedBlock waterloggedBlock) {
-							waterloggedBlock.pickupBlock(level, pos, state);
+							waterloggedBlock.pickupBlock(null, level, pos, state);
 						}
 					}
 				}
@@ -95,26 +96,30 @@ public class ExplosionHandler {
 					}
 				}
 			} else if (explosion.getExploder() instanceof FlowerBomb) {
-				ITag<Block> flowers = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.SMALL_FLOWERS);
-				for (BlockPos pos : affectedBlocks) {
-					BlockState state = level.getBlockState(pos);
-					if (level.getBlockState(pos.below()).is(BlockTags.DIRT) && state.isAir()) {
-						flowers.getRandomElement(level.random).ifPresent(flower -> {
-							BlockState flowerState = flower.defaultBlockState();
-							if (flower.canSurvive(flowerState, level, pos)) {
-								if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombChance.get()) {
-									level.setBlockAndUpdate(pos, flowerState);
-								}
-								if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
-									Bee bee = EntityType.BEE.create(level);
-									if (bee != null) {
-										bee.setPosRaw(explosion.getExploder().getX(), explosion.getExploder().getY() + 0.5D, explosion.getExploder().getZ());
-										level.addFreshEntity(bee);
+				Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.getTag(BlockTags.SMALL_FLOWERS);
+				if (optionalTag.isPresent()) {
+					for (BlockPos pos : affectedBlocks) {
+						BlockState state = level.getBlockState(pos);
+						if (level.getBlockState(pos.below()).is(BlockTags.DIRT) && state.isAir()) {
+							optionalTag.get().getRandomElement(level.random).ifPresent(holder -> {
+								Block flower = holder.value();
+								BlockState flowerState = flower.defaultBlockState();
+								if (flower.canSurvive(flowerState, level, pos)) {
+									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombChance.get()) {
+										level.setBlockAndUpdate(pos, flowerState);
+									}
+									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
+										Bee bee = EntityType.BEE.create(level);
+										if (bee != null) {
+											bee.setPosRaw(explosion.getExploder().getX(), explosion.getExploder().getY() + 0.5D, explosion.getExploder().getZ());
+											level.addFreshEntity(bee);
+										}
 									}
 								}
-							}
-						});
+							});
+						}
 					}
+
 				}
 			} else if (explosion.getExploder() instanceof EnderBomb bomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();

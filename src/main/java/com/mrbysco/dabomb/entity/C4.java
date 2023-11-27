@@ -23,9 +23,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.PlayMessages;
 
 public class C4 extends ThrowableItemProjectile {
 
@@ -125,8 +125,8 @@ public class C4 extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public double getMyRidingOffset() {
-		return 0.5D;
+	public float getMyRidingOffset(Entity entity) {
+		return 0.5F;
 	}
 
 	@Override
