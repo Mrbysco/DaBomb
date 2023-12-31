@@ -28,6 +28,5 @@
     "recipes": [
       "dabomb:c4"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

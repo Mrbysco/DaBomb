@@ -28,6 +28,5 @@
     "recipes": [
       "dabomb:bee_bomb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

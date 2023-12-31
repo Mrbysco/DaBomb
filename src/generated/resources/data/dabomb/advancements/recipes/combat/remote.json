@@ -28,6 +28,5 @@
     "recipes": [
       "dabomb:remote"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

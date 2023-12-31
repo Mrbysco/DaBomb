@@ -30,6 +30,5 @@
     "recipes": [
       "dabomb:bouncy_dynamite"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

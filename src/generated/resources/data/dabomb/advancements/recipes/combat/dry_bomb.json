@@ -30,6 +30,5 @@
     "recipes": [
       "dabomb:dry_bomb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

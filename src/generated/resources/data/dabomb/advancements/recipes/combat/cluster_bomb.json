@@ -28,6 +28,5 @@
     "recipes": [
       "dabomb:cluster_bomb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

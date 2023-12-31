@@ -42,14 +42,14 @@ public class ExplosionHandler {
 		List<BlockPos> affectedBlocks = event.getAffectedBlocks();
 		List<Entity> affectedEntities = event.getAffectedEntities();
 		if (!level.isClientSide) {
-			if (explosion.getExploder() instanceof DirtBomb) {
+			if (explosion.getDirectSourceEntity() instanceof DirtBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
 					if (state.isAir() || state.canBeReplaced()) {
 						level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
 					}
 				}
-			} else if (explosion.getExploder() instanceof WaterBomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof WaterBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
 					if (state.isAir()) {
@@ -58,14 +58,14 @@ public class ExplosionHandler {
 						waterloggedBlock.placeLiquid(level, pos, state, Fluids.WATER.getSource(false));
 					}
 				}
-			} else if (explosion.getExploder() instanceof LavaBomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof LavaBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
 					if (state.isAir() || state.canBeReplaced()) {
 						level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
 					}
 				}
-			} else if (explosion.getExploder() instanceof DryBomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof DryBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
 					if (state.getBlock() instanceof LiquidBlock && state.canBeReplaced()) {
@@ -76,18 +76,18 @@ public class ExplosionHandler {
 						}
 					}
 				}
-			} else if (explosion.getExploder() instanceof BombFish bombFish) {
+			} else if (explosion.getDirectSourceEntity() instanceof BombFish bombFish) {
 				for (Entity entity : affectedEntities) {
 					if (entity instanceof LivingEntity livingEntity && !bombFish.getOwner().getUUID().equals(entity.getUUID())) {
 						livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 10, 0), bombFish);
 					}
 				}
-			} else if (explosion.getExploder() instanceof BeeBomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof BeeBomb beeBomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (int i = 0; i < BombConfig.COMMON.beeAmount.get(); i++) {
 					Bee bee = EntityType.BEE.create(level);
 					if (bee != null) {
-						bee.setPosRaw(explosion.getExploder().getX(), explosion.getExploder().getY() + 0.5D, explosion.getExploder().getZ());
+						bee.setPosRaw(beeBomb.getX(), beeBomb.getY() + 0.5D, beeBomb.getZ());
 						if (!livingEntities.isEmpty()) {
 							bee.setPersistentAngerTarget(livingEntities.get(level.random.nextInt(livingEntities.size())).getUUID());
 							bee.startPersistentAngerTimer();
@@ -95,7 +95,7 @@ public class ExplosionHandler {
 						level.addFreshEntity(bee);
 					}
 				}
-			} else if (explosion.getExploder() instanceof FlowerBomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof FlowerBomb flowerBomb) {
 				Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.getTag(BlockTags.SMALL_FLOWERS);
 				if (optionalTag.isPresent()) {
 					for (BlockPos pos : affectedBlocks) {
@@ -111,7 +111,7 @@ public class ExplosionHandler {
 									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
 										Bee bee = EntityType.BEE.create(level);
 										if (bee != null) {
-											bee.setPosRaw(explosion.getExploder().getX(), explosion.getExploder().getY() + 0.5D, explosion.getExploder().getZ());
+											bee.setPosRaw(flowerBomb.getX(), flowerBomb.getY() + 0.5D, flowerBomb.getZ());
 											level.addFreshEntity(bee);
 										}
 									}
@@ -121,7 +121,7 @@ public class ExplosionHandler {
 					}
 
 				}
-			} else if (explosion.getExploder() instanceof EnderBomb bomb) {
+			} else if (explosion.getDirectSourceEntity() instanceof EnderBomb bomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (LivingEntity livingEntity : livingEntities) {
 					double targetX = livingEntity.getX() + (level.random.nextDouble() - 0.5D) * 64.0D;

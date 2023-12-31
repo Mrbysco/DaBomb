@@ -30,6 +30,5 @@
     "recipes": [
       "dabomb:lava_bomb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

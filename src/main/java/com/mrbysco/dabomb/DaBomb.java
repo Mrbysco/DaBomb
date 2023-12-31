@@ -10,7 +10,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -20,8 +19,7 @@ public class DaBomb {
 	public static final String MOD_ID = "dabomb";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public DaBomb() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public DaBomb(IEventBus eventBus) {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BombConfig.commonSpec);
 		eventBus.register(BombConfig.class);
 

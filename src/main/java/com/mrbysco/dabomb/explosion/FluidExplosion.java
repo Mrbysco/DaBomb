@@ -6,7 +6,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -34,7 +32,7 @@ public class FluidExplosion extends Explosion {
 	private final Predicate<FluidState> fluidPredicate;
 
 	public FluidExplosion(Level level, @Nullable Entity entity, double x, double y, double z, float radius, boolean flames, Predicate<FluidState> fluidPredicate, Explosion.BlockInteraction blockInteraction) {
-		super(level, entity, (DamageSource) null, (ExplosionDamageCalculator) null, x, y, z, radius, flames, blockInteraction);
+		super(level, entity, x, y, z, radius, flames, blockInteraction);
 		this.fluidPredicate = fluidPredicate;
 	}
 
@@ -126,7 +124,7 @@ public class FluidExplosion extends Explosion {
 
 		for (int i = 0; i < list.size(); ++i) {
 			Entity entity = list.get(i);
-			if (!entity.ignoreExplosion()) {
+			if (!entity.ignoreExplosion(this)) {
 				double d12 = Math.sqrt(entity.distanceToSqr(vec3)) / (double) f2;
 				if (d12 <= 1.0D) {
 					double d5 = entity.getX() - this.x;
@@ -139,7 +137,7 @@ public class FluidExplosion extends Explosion {
 						d9 /= d13;
 						double d14 = (double) getSeenPercent(vec3, entity);
 						double d10 = (1.0D - d12) * d14;
-						entity.hurt(this.getDamageSource(), (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) f2 + 1.0D)));
+						entity.hurt(entity.damageSources().explosion(this), (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) f2 + 1.0D)));
 						double d11 = d10;
 						if (entity instanceof LivingEntity) {
 							d11 = ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, d10);
