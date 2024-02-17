@@ -5,8 +5,6 @@ import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -24,8 +22,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.network.PlayMessages;
 
 public class C4 extends ThrowableItemProjectile {
 
@@ -40,16 +36,6 @@ public class C4 extends ThrowableItemProjectile {
 	public C4(Level level, double x, double y, double z) {
 		super(BombRegistry.C4_ENTITY.get(), x, y, z, level);
 	}
-
-	public C4(PlayMessages.SpawnEntity spawnEntity, Level level) {
-		this(BombRegistry.C4_ENTITY.get(), level);
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
 
 	protected Item getDefaultItem() {
 		return BombRegistry.C4_ITEM.get();

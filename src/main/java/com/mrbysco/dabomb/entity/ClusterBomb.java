@@ -6,8 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -23,8 +21,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.network.PlayMessages;
 
 public class ClusterBomb extends ThrowableItemProjectile {
 	private int bounceCount = 0;
@@ -41,18 +37,9 @@ public class ClusterBomb extends ThrowableItemProjectile {
 		super(BombRegistry.BOMB.get(), x, y, z, level);
 	}
 
-	public ClusterBomb(PlayMessages.SpawnEntity spawnEntity, Level level) {
-		this(BombRegistry.CLUSTER_BOMB.get(), level);
-	}
-
 	@Override
 	public ItemStack getItem() {
 		return new ItemStack(BombRegistry.CLUSTER_BOMB_ITEM.get());
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	protected Item getDefaultItem() {

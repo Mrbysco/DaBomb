@@ -8,8 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -27,8 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.network.PlayMessages;
 
 public class LavaBomb extends ThrowableItemProjectile {
 	private int bounceCount = 0;
@@ -44,16 +40,6 @@ public class LavaBomb extends ThrowableItemProjectile {
 	public LavaBomb(Level level, double x, double y, double z) {
 		super(BombRegistry.LAVA_BOMB.get(), x, y, z, level);
 	}
-
-	public LavaBomb(PlayMessages.SpawnEntity spawnEntity, Level level) {
-		this(BombRegistry.LAVA_BOMB.get(), level);
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
 
 	protected Item getDefaultItem() {
 		return BombRegistry.LAVA_BOMB_ITEM.get();

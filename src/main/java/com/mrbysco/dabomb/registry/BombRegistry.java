@@ -84,71 +84,71 @@ public class BombRegistry {
 	public static final Supplier<EntityType<Bomb>> BOMB = ENTITY_TYPES.register("bomb", () ->
 			EntityType.Builder.<Bomb>of(Bomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(Bomb::new).build("bomb"));
+					.build("bomb"));
 	public static final Supplier<EntityType<BouncyBomb>> BOUNCY_BOMB = ENTITY_TYPES.register("bouncy_bomb", () ->
 			EntityType.Builder.<BouncyBomb>of(BouncyBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(BouncyBomb::new).build("bouncy_bomb"));
+					.build("bouncy_bomb"));
 	public static final Supplier<EntityType<StickyBomb>> STICKY_BOMB = ENTITY_TYPES.register("sticky_bomb", () ->
 			EntityType.Builder.<StickyBomb>of(StickyBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(StickyBomb::new).build("sticky_bomb"));
+					.build("sticky_bomb"));
 	public static final Supplier<EntityType<BombFish>> BOMB_FISH = ENTITY_TYPES.register("bomb_fish", () ->
 			EntityType.Builder.<BombFish>of(BombFish::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(BombFish::new).build("bomb_fish"));
+					.build("bomb_fish"));
 	public static final Supplier<EntityType<DirtBomb>> DIRT_BOMB = ENTITY_TYPES.register("dirt_bomb", () ->
 			EntityType.Builder.<DirtBomb>of(DirtBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(DirtBomb::new).build("dirt_bomb"));
+					.build("dirt_bomb"));
 	public static final Supplier<EntityType<DryBomb>> DRY_BOMB = ENTITY_TYPES.register("dry_bomb", () ->
 			EntityType.Builder.<DryBomb>of(DryBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(DryBomb::new).build("dry_bomb"));
+					.build("dry_bomb"));
 	public static final Supplier<EntityType<WaterBomb>> WATER_BOMB = ENTITY_TYPES.register("water_bomb", () ->
 			EntityType.Builder.<WaterBomb>of(WaterBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(WaterBomb::new).build("water_bomb"));
+					.build("water_bomb"));
 	public static final Supplier<EntityType<LavaBomb>> LAVA_BOMB = ENTITY_TYPES.register("lava_bomb", () ->
 			EntityType.Builder.<LavaBomb>of(LavaBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(LavaBomb::new).build("lava_bomb"));
+					.build("lava_bomb"));
 	public static final Supplier<EntityType<BeeBomb>> BEE_BOMB = ENTITY_TYPES.register("bee_bomb", () ->
 			EntityType.Builder.<BeeBomb>of(BeeBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(BeeBomb::new).build("bee_bomb"));
+					.build("bee_bomb"));
 	public static final Supplier<EntityType<FlowerBomb>> FLOWER_BOMB = ENTITY_TYPES.register("flower_bomb", () ->
 			EntityType.Builder.<FlowerBomb>of(FlowerBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(FlowerBomb::new).build("flower_bomb"));
+					.build("flower_bomb"));
 	public static final Supplier<EntityType<EnderBomb>> ENDER_BOMB = ENTITY_TYPES.register("ender_bomb", () ->
 			EntityType.Builder.<EnderBomb>of(EnderBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(EnderBomb::new).build("ender_bomb"));
+					.build("ender_bomb"));
 	public static final Supplier<EntityType<ClusterBomb>> CLUSTER_BOMB = ENTITY_TYPES.register("cluster_bomb", () ->
 			EntityType.Builder.<ClusterBomb>of(ClusterBomb::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(ClusterBomb::new).build("cluster_bomb"));
+					.build("cluster_bomb"));
 	public static final Supplier<EntityType<BombFragment>> BOMB_FRAGMENT = ENTITY_TYPES.register("bomb_fragment", () ->
 			EntityType.Builder.<BombFragment>of(BombFragment::new, MobCategory.MISC)
 					.sized(0.15625F, 0.15625F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(BombFragment::new).build("bomb_fragment"));
+					.build("bomb_fragment"));
 	public static final Supplier<EntityType<Dynamite>> DYNAMITE = ENTITY_TYPES.register("dynamite", () ->
 			EntityType.Builder.<Dynamite>of(Dynamite::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(Dynamite::new).build("dynamite"));
+					.build("dynamite"));
 	public static final Supplier<EntityType<StickyDynamite>> STICKY_DYNAMITE = ENTITY_TYPES.register("sticky_dynamite", () ->
 			EntityType.Builder.<StickyDynamite>of(StickyDynamite::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(StickyDynamite::new).build("sticky_dynamite"));
+					.build("sticky_dynamite"));
 	public static final Supplier<EntityType<BouncyDynamite>> BOUNCY_DYNAMITE = ENTITY_TYPES.register("bouncy_dynamite", () ->
 			EntityType.Builder.<BouncyDynamite>of(BouncyDynamite::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(BouncyDynamite::new).build("bouncy_dynamite"));
+					.build("bouncy_dynamite"));
 	public static final Supplier<EntityType<C4>> C4_ENTITY = ENTITY_TYPES.register("c4", () ->
 			EntityType.Builder.<C4>of(C4::new, MobCategory.MISC)
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.setCustomClientFactory(C4::new).build("c4"));
+					.build("c4"));
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
 			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_shoot")));

@@ -2,7 +2,6 @@ package com.mrbysco.dabomb.datagen;
 
 import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.registry.BombRegistry;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -25,7 +24,6 @@ import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -37,7 +35,7 @@ public class BombDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(true, new Recipes(packOutput, event.getLookupProvider()));
+			generator.addProvider(true, new Recipes(packOutput));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(true, new Language(packOutput));
@@ -47,8 +45,8 @@ public class BombDatagen {
 	}
 
 	private static class Recipes extends RecipeProvider {
-		public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-			super(packOutput, lookupProvider);
+		public Recipes(PackOutput packOutput) {
+			super(packOutput);
 		}
 
 		@Override
