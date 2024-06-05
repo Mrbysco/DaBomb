@@ -37,15 +37,17 @@ public class C4 extends ThrowableItemProjectile {
 		super(BombRegistry.C4_ENTITY.get(), x, y, z, level);
 	}
 
+	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.C4_ITEM.get();
 	}
 
 	private ParticleOptions getParticle() {
-		ItemStack itemstack = this.getItemRaw();
+		ItemStack itemstack = this.getItem();
 		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
+	@Override
 	public void handleEntityEvent(byte id) {
 		if (id == 3) {
 			ParticleOptions particleoptions = this.getParticle();
@@ -70,6 +72,7 @@ public class C4 extends ThrowableItemProjectile {
 //		}
 	}
 
+	@Override
 	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
 		if (random.nextDouble() <= 0.075D) {
@@ -111,14 +114,14 @@ public class C4 extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public float getMyRidingOffset(Entity entity) {
-		return 0.5F;
+	public Vec3 getPassengerRidingPosition(Entity pEntity) {
+		return new Vec3(0, 0.5F, 0);
 	}
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (stack.is(Tags.Items.SHEARS) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
+		if (stack.is(Tags.Items.TOOLS_SHEARS) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
 			this.spawnAtLocation(BombRegistry.C4_ITEM.get());
 			if (random.nextDouble() <= 0.075D) {
 				this.level().playSound(null, blockPosition(), BombRegistry.BOMB_DEFUSED.get(), SoundSource.NEUTRAL, 0.65F, 1.0F);

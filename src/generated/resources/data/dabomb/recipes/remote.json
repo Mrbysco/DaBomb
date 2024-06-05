@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     }
   },
   "pattern": [
@@ -15,6 +15,7 @@
     "II "
   ],
   "result": {
-    "item": "dabomb:remote"
+    "count": 1,
+    "id": "dabomb:remote"
   }
 }

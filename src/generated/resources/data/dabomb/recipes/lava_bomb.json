@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "G": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     },
     "L": {
       "item": "minecraft:lava_bucket"
@@ -15,6 +15,7 @@
     " G "
   ],
   "result": {
-    "item": "dabomb:lava_bomb"
+    "count": 1,
+    "id": "dabomb:lava_bomb"
   }
 }

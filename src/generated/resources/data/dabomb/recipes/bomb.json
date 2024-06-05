@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "G": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     },
     "S": {
-      "tag": "forge:sand"
+      "tag": "c:sands"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "dabomb:bomb"
+    "id": "dabomb:bomb"
   }
 }

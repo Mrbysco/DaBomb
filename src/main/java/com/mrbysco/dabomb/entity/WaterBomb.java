@@ -41,15 +41,17 @@ public class WaterBomb extends ThrowableItemProjectile {
 		super(BombRegistry.WATER_BOMB.get(), x, y, z, level);
 	}
 
+	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.WATER_BOMB_ITEM.get();
 	}
 
 	private ParticleOptions getParticle() {
-		ItemStack itemstack = this.getItemRaw();
+		ItemStack itemstack = this.getItem();
 		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
+	@Override
 	public void handleEntityEvent(byte id) {
 		if (id == 3) {
 			ParticleOptions particleoptions = this.getParticle();
@@ -81,6 +83,7 @@ public class WaterBomb extends ThrowableItemProjectile {
 		}
 	}
 
+	@Override
 	protected void onHit(HitResult hitResult) {
 		if (bounceCount >= 20) {
 			this.setNoGravity(true);

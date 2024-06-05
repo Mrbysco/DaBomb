@@ -6,10 +6,11 @@
       "item": "dabomb:dynamite"
     },
     {
-      "tag": "forge:slimeballs"
+      "tag": "c:slimeballs"
     }
   ],
   "result": {
-    "item": "dabomb:bouncy_dynamite"
+    "count": 1,
+    "id": "dabomb:bouncy_dynamite"
   }
 }

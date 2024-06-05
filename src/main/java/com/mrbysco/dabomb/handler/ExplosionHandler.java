@@ -104,7 +104,7 @@ public class ExplosionHandler {
 							optionalTag.get().getRandomElement(level.random).ifPresent(holder -> {
 								Block flower = holder.value();
 								BlockState flowerState = flower.defaultBlockState();
-								if (flower.canSurvive(flowerState, level, pos)) {
+								if (flowerState.canSurvive(level, pos)) {
 									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombChance.get()) {
 										level.setBlockAndUpdate(pos, flowerState);
 									}

@@ -18,6 +18,7 @@ public class C4Item extends ThrowableItem {
 		super(properties, entityTypeSupplier, soundSupplier, cooldown, z, velocity, inaccuracy);
 	}
 
+	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
 		if (player.getInventory().contains(new ItemStack(BombRegistry.REMOTE.get()))) {
 			super.use(level, player, interactionHand);

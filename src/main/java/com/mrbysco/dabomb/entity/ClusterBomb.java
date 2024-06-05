@@ -42,6 +42,7 @@ public class ClusterBomb extends ThrowableItemProjectile {
 		return new ItemStack(BombRegistry.CLUSTER_BOMB_ITEM.get());
 	}
 
+	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.BOMB_ITEM.get();
 	}
@@ -50,6 +51,7 @@ public class ClusterBomb extends ThrowableItemProjectile {
 		return ParticleTypes.SMOKE;
 	}
 
+	@Override
 	public void handleEntityEvent(byte id) {
 		if (id == 3) {
 			ParticleOptions particleoptions = this.getParticle();
@@ -85,6 +87,7 @@ public class ClusterBomb extends ThrowableItemProjectile {
 		}
 	}
 
+	@Override
 	protected void onHit(HitResult hitResult) {
 		if (bounceCount >= 20) {
 			this.setNoGravity(true);

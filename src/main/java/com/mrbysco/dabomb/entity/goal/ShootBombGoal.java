@@ -49,6 +49,7 @@ public class ShootBombGoal extends Goal {
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
+	@Override
 	public boolean canUse() {
 		LivingEntity livingentity = this.bomber.getTarget();
 		if (livingentity != null && livingentity.isAlive()) {
@@ -59,20 +60,24 @@ public class ShootBombGoal extends Goal {
 		}
 	}
 
+	@Override
 	public boolean canContinueToUse() {
 		return this.bomber.getMainHandItem().getItem() instanceof ThrowableItem && (this.canUse() || !this.bomber.getNavigation().isDone());
 	}
 
+	@Override
 	public void stop() {
 		this.target = null;
 		this.seeTime = 0;
 		this.attackTime = -1;
 	}
 
+	@Override
 	public boolean requiresUpdateEveryTick() {
 		return true;
 	}
 
+	@Override
 	public void tick() {
 		double d0 = this.bomber.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
 		boolean flag = this.bomber.getSensing().hasLineOfSight(this.target);

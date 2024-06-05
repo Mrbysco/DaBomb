@@ -3,13 +3,13 @@
   "category": "equipment",
   "key": {
     "G": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     },
     "P": {
       "item": "minecraft:pufferfish"
     },
     "S": {
-      "tag": "forge:sand"
+      "tag": "c:sands"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "dabomb:bomb_fish"
+    "id": "dabomb:bomb_fish"
   }
 }

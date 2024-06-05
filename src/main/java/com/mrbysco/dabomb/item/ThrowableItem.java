@@ -51,6 +51,7 @@ public class ThrowableItem extends Item {
 		return inaccuracy;
 	}
 
+	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
 		ItemStack itemstack = player.getItemInHand(interactionHand);
 		if (getSoundEvent() != null) {

@@ -3,13 +3,13 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "G": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     },
     "S": {
-      "tag": "forge:sand"
+      "tag": "c:sands"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 3,
-    "item": "dabomb:dynamite"
+    "id": "dabomb:dynamite"
   }
 }

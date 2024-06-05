@@ -6,10 +6,11 @@
       "item": "dabomb:bomb"
     },
     {
-      "tag": "forge:slimeballs"
+      "tag": "c:slimeballs"
     }
   ],
   "result": {
-    "item": "dabomb:bouncy_bomb"
+    "count": 1,
+    "id": "dabomb:bouncy_bomb"
   }
 }
