@@ -8,9 +8,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -125,22 +125,26 @@ public class FluidExplosion extends Explosion {
 		for (int i = 0; i < list.size(); ++i) {
 			Entity entity = list.get(i);
 			if (!entity.ignoreExplosion(this)) {
-				double d12 = Math.sqrt(entity.distanceToSqr(vec3)) / (double) f2;
-				if (d12 <= 1.0D) {
+				double d11 = Math.sqrt(entity.distanceToSqr(vec3)) / (double) f2;
+				if (d11 <= 1.0D) {
 					double d5 = entity.getX() - this.x;
 					double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.y;
 					double d9 = entity.getZ() - this.z;
-					double d13 = Math.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
-					if (d13 != 0.0D) {
-						d5 /= d13;
-						d7 /= d13;
-						d9 /= d13;
-						double d14 = (double) getSeenPercent(vec3, entity);
-						double d10 = (1.0D - d12) * d14;
-						entity.hurt(entity.damageSources().explosion(this), (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) f2 + 1.0D)));
-						double d11 = d10;
-						if (entity instanceof LivingEntity) {
-							d11 = ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, d10);
+					double d12 = Math.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
+					if (d12 != 0.0D) {
+						d5 /= d12;
+						d7 /= d12;
+						d9 /= d12;
+						if (this.damageCalculator.shouldDamageEntity(this, entity)) {
+							entity.hurt(this.damageSource, this.damageCalculator.getEntityDamageAmount(this, entity));
+						}
+
+						double d13 = (1.0 - d11) * (double) getSeenPercent(vec3, entity) * (double) this.damageCalculator.getKnockbackMultiplier(entity);
+						double d10;
+						if (entity instanceof LivingEntity livingentity) {
+							d10 = d13 * (1.0 - livingentity.getAttributeValue(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE));
+						} else {
+							d10 = d13;
 						}
 
 						entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));

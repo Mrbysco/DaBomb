@@ -83,7 +83,7 @@ public class AIHandler {
 							DaBomb.LOGGER.error(String.format("Invalid resourcelocation syntax in 'bomberman'. could not find \":\" in %s", configValue));
 							return;
 						}
-						ResourceLocation registry = new ResourceLocation(values[0]);
+						ResourceLocation registry = ResourceLocation.tryParse(values[0]);
 						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(registry);
 						List<BombData> dataList = bomberMap.getOrDefault(entityType, new ArrayList<>());
 

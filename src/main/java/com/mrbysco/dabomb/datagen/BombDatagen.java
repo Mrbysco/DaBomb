@@ -227,20 +227,20 @@ public class BombDatagen {
 		public void registerSounds() {
 			this.add(BombRegistry.BOMB_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_SHOOT.getId()))
-					.with(sound(new ResourceLocation("random/bow"))));
+					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
 			this.add(BombRegistry.DYNAMITE_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.DYNAMITE_SHOOT.getId()))
-					.with(sound(new ResourceLocation("random/bow"))));
+					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
 			this.add(BombRegistry.C4_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.C4_SHOOT.getId()))
-					.with(sound(new ResourceLocation("random/bow"))));
+					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
 
 			this.add(BombRegistry.BOMB_PLANTED, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_PLANTED.getId()))
-					.with(sound(new ResourceLocation(DaBomb.MOD_ID, "bomb_planted"))));
+					.with(sound(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted"))));
 			this.add(BombRegistry.BOMB_DEFUSED, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_DEFUSED.getId()))
-					.with(sound(new ResourceLocation(DaBomb.MOD_ID, "bomb_defused"))));
+					.with(sound(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused"))));
 		}
 
 		public String modSubtitle(ResourceLocation id) {

@@ -121,7 +121,7 @@ public class C4 extends ThrowableItemProjectile {
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (stack.is(Tags.Items.TOOLS_SHEARS) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
+		if (stack.is(Tags.Items.TOOLS_SHEAR) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
 			this.spawnAtLocation(BombRegistry.C4_ITEM.get());
 			if (random.nextDouble() <= 0.075D) {
 				this.level().playSound(null, blockPosition(), BombRegistry.BOMB_DEFUSED.get(), SoundSource.NEUTRAL, 0.65F, 1.0F);

@@ -151,16 +151,16 @@ public class BombRegistry {
 					.build("c4"));
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
-			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_shoot")));
+			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_shoot")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> DYNAMITE_SHOOT = SOUND_EVENTS.register("dynamite_shoot", () ->
-			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "dynamite_shoot")));
+			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "dynamite_shoot")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> C4_SHOOT = SOUND_EVENTS.register("c4_shoot", () ->
-			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "c4_shoot")));
+			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "c4_shoot")));
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_PLANTED = SOUND_EVENTS.register("bomb_planted", () ->
-			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_planted")));
+			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_DEFUSED = SOUND_EVENTS.register("bomb_defused", () ->
-			SoundEvent.createVariableRangeEvent(new ResourceLocation(DaBomb.MOD_ID, "bomb_defused")));
+			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused")));
 
 	public static final Supplier<CreativeModeTab> BOMB_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
 			.icon(() -> BombRegistry.BOMB_ITEM.get().getDefaultInstance())
