@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,14 +27,6 @@ public class Bomb extends ThrowableItemProjectile {
 
 	public Bomb(EntityType<? extends Bomb> entityType, Level level) {
 		super(entityType, level);
-	}
-
-	public Bomb(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.BOMB.get(), livingEntity, level);
-	}
-
-	public Bomb(Level level, double x, double y, double z) {
-		super(BombRegistry.BOMB.get(), x, y, z, level);
 	}
 
 	@Override

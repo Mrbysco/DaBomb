@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "item": "dabomb:bomb"
-    },
-    "F": {
-      "tag": "minecraft:small_flowers"
-    }
+    "B": "dabomb:bomb",
+    "F": "#minecraft:small_flowers"
   },
   "pattern": [
     " F ",

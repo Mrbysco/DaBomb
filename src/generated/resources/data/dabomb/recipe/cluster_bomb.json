@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "E": {
-      "item": "dabomb:bomb"
-    },
-    "G": {
-      "tag": "c:gunpowders"
-    }
+    "E": "dabomb:bomb",
+    "G": "#c:gunpowders"
   },
   "pattern": [
     "GEG",

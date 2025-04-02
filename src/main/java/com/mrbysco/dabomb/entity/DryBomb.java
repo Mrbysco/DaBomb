@@ -8,12 +8,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,14 +32,6 @@ public class DryBomb extends ThrowableItemProjectile {
 
 	public DryBomb(EntityType<? extends DryBomb> entityType, Level level) {
 		super(entityType, level);
-	}
-
-	public DryBomb(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.DRY_BOMB.get(), livingEntity, level);
-	}
-
-	public DryBomb(Level level, double x, double y, double z) {
-		super(BombRegistry.DRY_BOMB.get(), x, y, z, level);
 	}
 
 	@Override
@@ -149,10 +141,11 @@ public class DryBomb extends ThrowableItemProjectile {
 	}
 
 	protected void explode() {
-		FluidExplosion explosion = new FluidExplosion(this.level(), this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
+		if (this.level().isClientSide)
+			return;
+		FluidExplosion explosion = new FluidExplosion((ServerLevel) this.level(), this, new Vec3(this.getX(), this.getY(0.0625D) + 0.5F, this.getZ()), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
 				state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
 		explosion.explode();
-		explosion.finalizeExplosion(false);
 	}
 
 	@Override

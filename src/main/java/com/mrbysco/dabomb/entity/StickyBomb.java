@@ -24,14 +24,6 @@ public class StickyBomb extends ThrowableItemProjectile {
 		super(entityType, level);
 	}
 
-	public StickyBomb(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.STICKY_BOMB.get(), livingEntity, level);
-	}
-
-	public StickyBomb(Level level, double x, double y, double z) {
-		super(BombRegistry.STICKY_BOMB.get(), x, y, z, level);
-	}
-
 	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.STICKY_BOMB_ITEM.get();

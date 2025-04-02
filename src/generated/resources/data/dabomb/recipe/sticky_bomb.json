@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "dabomb:bomb"
-    },
-    {
-      "item": "minecraft:honey_bottle"
-    }
+    "dabomb:bomb",
+    "minecraft:honey_bottle"
   ],
   "result": {
     "count": 1,

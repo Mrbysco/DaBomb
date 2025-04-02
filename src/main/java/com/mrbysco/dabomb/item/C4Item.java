@@ -3,7 +3,7 @@ package com.mrbysco.dabomb.item;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,12 +18,13 @@ public class C4Item extends ThrowableItem {
 		super(properties, entityTypeSupplier, soundSupplier, cooldown, z, velocity, inaccuracy);
 	}
 
+
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		if (player.getInventory().contains(new ItemStack(BombRegistry.REMOTE.get()))) {
-			super.use(level, player, interactionHand);
+			super.use(level, player, hand);
 		}
 
-		return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+		return InteractionResult.PASS;
 	}
 }

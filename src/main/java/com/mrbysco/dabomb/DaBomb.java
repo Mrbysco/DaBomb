@@ -6,6 +6,7 @@ import com.mrbysco.dabomb.config.BombConfig;
 import com.mrbysco.dabomb.handler.AIHandler;
 import com.mrbysco.dabomb.handler.ExplosionHandler;
 import com.mrbysco.dabomb.registry.BombRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -32,8 +33,12 @@ public class DaBomb {
 		NeoForge.EVENT_BUS.register(new AIHandler());
 
 		if (dist.isClient()) {
-			eventBus.addListener(ClientHandler::registerItemColors);
+			eventBus.addListener(ClientHandler::registerItemTint);
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 		}
+	}
+
+	public static ResourceLocation modLoc(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 }

@@ -2,9 +2,7 @@ package com.mrbysco.dabomb.explosion;
 
 import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +11,7 @@ import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -24,15 +22,16 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class FluidExplosion extends Explosion {
+public class FluidExplosion extends ServerExplosion {
 	private final Predicate<FluidState> fluidPredicate;
 
-	public FluidExplosion(Level level, @Nullable Entity entity, double x, double y, double z, float radius, boolean flames, Predicate<FluidState> fluidPredicate, Explosion.BlockInteraction blockInteraction) {
-		super(level, entity, x, y, z, radius, flames, blockInteraction);
+	public FluidExplosion(ServerLevel level, @Nullable Entity entity, Vec3 center, float radius, boolean flames, Predicate<FluidState> fluidPredicate, Explosion.BlockInteraction blockInteraction) {
+		super(level, entity, null, null, center, radius, flames, blockInteraction);
 		this.fluidPredicate = fluidPredicate;
 	}
 
@@ -71,7 +70,7 @@ public class FluidExplosion extends Explosion {
 
 	@Override
 	public void explode() {
-		this.level.gameEvent(this.source, GameEvent.EXPLODE, BlockPos.containing(this.x, this.y, this.z));
+		this.level.gameEvent(this.source, GameEvent.EXPLODE, BlockPos.containing(this.center()));
 		Set<BlockPos> set = Sets.newHashSet();
 		for (int i = 0; i < 16; ++i) {
 			for (int j = 0; j < 16; ++j) {
@@ -85,9 +84,9 @@ public class FluidExplosion extends Explosion {
 						d1 /= d3;
 						d2 /= d3;
 						float f = this.radius * (0.7F + this.level.random.nextFloat() * 0.6F);
-						double x = this.x;
-						double y = this.y;
-						double z = this.z;
+						double x = this.center().x;
+						double y = this.center().y;
+						double z = this.center().z;
 
 						for (float f1 = 0.3F; f > 0.0F; f -= 0.22500001F) {
 							BlockPos blockpos = BlockPos.containing(x, y, z);
@@ -110,36 +109,38 @@ public class FluidExplosion extends Explosion {
 			}
 		}
 
-		this.toBlow.addAll(set);
+		List<BlockPos> toBlow = new ArrayList<>(set);
 		float f2 = this.radius * 2.0F;
-		int k1 = Mth.floor(this.x - (double) f2 - 1.0D);
-		int l1 = Mth.floor(this.x + (double) f2 + 1.0D);
-		int i2 = Mth.floor(this.y - (double) f2 - 1.0D);
-		int i1 = Mth.floor(this.y + (double) f2 + 1.0D);
-		int j2 = Mth.floor(this.z - (double) f2 - 1.0D);
-		int j1 = Mth.floor(this.z + (double) f2 + 1.0D);
+		int k1 = Mth.floor(this.center().x - (double) f2 - 1.0D);
+		int l1 = Mth.floor(this.center().x + (double) f2 + 1.0D);
+		int i2 = Mth.floor(this.center().y - (double) f2 - 1.0D);
+		int i1 = Mth.floor(this.center().y + (double) f2 + 1.0D);
+		int j2 = Mth.floor(this.center().z - (double) f2 - 1.0D);
+		int j1 = Mth.floor(this.center().z + (double) f2 + 1.0D);
 		List<Entity> list = this.level.getEntities(this.source, new AABB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		EventHooks.onExplosionDetonate(this.level, this, list, f2);
-		Vec3 vec3 = new Vec3(this.x, this.y, this.z);
+		EventHooks.onExplosionDetonate(this.level, this, list, toBlow);
 
 		for (int i = 0; i < list.size(); ++i) {
 			Entity entity = list.get(i);
 			if (!entity.ignoreExplosion(this)) {
-				double d11 = Math.sqrt(entity.distanceToSqr(vec3)) / (double) f2;
+				double d11 = Math.sqrt(entity.distanceToSqr(this.center())) / (double) f2;
 				if (d11 <= 1.0D) {
-					double d5 = entity.getX() - this.x;
-					double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.y;
-					double d9 = entity.getZ() - this.z;
+					double d5 = entity.getX() - this.center().x;
+					double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.center().y;
+					double d9 = entity.getZ() - this.center().z;
 					double d12 = Math.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
 					if (d12 != 0.0D) {
 						d5 /= d12;
 						d7 /= d12;
 						d9 /= d12;
-						if (this.damageCalculator.shouldDamageEntity(this, entity)) {
-							entity.hurt(this.damageSource, this.damageCalculator.getEntityDamageAmount(this, entity));
+						boolean flag = this.damageCalculator.shouldDamageEntity(this, entity);
+						float f1 = this.damageCalculator.getKnockbackMultiplier(entity);
+						if (flag) {
+							float seenPercentage = !flag && f1 == 0.0F ? 0.0F : getSeenPercent(this.center(), entity);
+							entity.hurt(this.damageSource, this.damageCalculator.getEntityDamageAmount(this, entity, seenPercentage));
 						}
 
-						double d13 = (1.0 - d11) * (double) getSeenPercent(vec3, entity) * (double) this.damageCalculator.getKnockbackMultiplier(entity);
+						double d13 = (1.0 - d11) * (double) getSeenPercent(this.center(), entity) * (double) this.damageCalculator.getKnockbackMultiplier(entity);
 						double d10;
 						if (entity instanceof LivingEntity livingentity) {
 							d10 = d13 * (1.0 - livingentity.getAttributeValue(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE));
@@ -155,21 +156,6 @@ public class FluidExplosion extends Explosion {
 						}
 					}
 				}
-			}
-		}
-	}
-
-	@Override
-	public void finalizeExplosion(boolean spawnParticles) {
-		if (!this.level.isClientSide) {
-			this.level.playSound(null, BlockPos.containing(this.x, this.y, this.z), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
-		}
-
-		if (spawnParticles) {
-			if (!(this.radius < 2.0F)) {
-				this.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.x, this.y, this.z, 1.0D, 0.0D, 0.0D);
-			} else {
-				this.level.addParticle(ParticleTypes.EXPLOSION, this.x, this.y, this.z, 1.0D, 0.0D, 0.0D);
 			}
 		}
 	}

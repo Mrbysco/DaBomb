@@ -5,7 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,8 +19,9 @@ public class RemoteItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		player.getCooldowns().addCooldown(this, 20);
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+		player.getCooldowns().addCooldown(itemstack, 20);
 		level.playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
 		List<C4> c4s = level.getEntitiesOfClass(C4.class, player.getBoundingBox().inflate(64D))
@@ -32,7 +33,7 @@ public class RemoteItem extends Item {
 				}
 			}
 			player.awardStat(Stats.ITEM_USED.get(this));
-			return InteractionResultHolder.success(player.getItemInHand(hand));
+			return InteractionResult.SUCCESS;
 		}
 
 		return super.use(level, player, hand);

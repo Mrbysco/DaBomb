@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "dabomb:dynamite"
-    },
-    {
-      "item": "minecraft:honey_bottle"
-    }
+    "dabomb:dynamite",
+    "minecraft:honey_bottle"
   ],
   "result": {
     "count": 1,

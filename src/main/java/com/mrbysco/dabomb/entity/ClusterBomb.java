@@ -10,8 +10,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,14 +27,6 @@ public class ClusterBomb extends ThrowableItemProjectile {
 
 	public ClusterBomb(EntityType<? extends ClusterBomb> entityType, Level level) {
 		super(entityType, level);
-	}
-
-	public ClusterBomb(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.BOMB.get(), livingEntity, level);
-	}
-
-	public ClusterBomb(Level level, double x, double y, double z) {
-		super(BombRegistry.BOMB.get(), x, y, z, level);
 	}
 
 	@Override
@@ -75,7 +67,7 @@ public class ClusterBomb extends ThrowableItemProjectile {
 
 				//Spawn 4 fragment bombs
 				for (int i = 0; i <= 4; i++) {
-					BombFragment fragment = BombRegistry.BOMB_FRAGMENT.get().create(this.level());
+					BombFragment fragment = BombRegistry.BOMB_FRAGMENT.get().create(this.level(), EntitySpawnReason.EVENT);
 					fragment.setDeltaMovement((this.level().random.nextDouble() * 6D - 3D) * 0.3D, 0, (this.level().random.nextDouble() * 6D - 3D) * 0.3D);
 					fragment.setPos(getX(), getY() + 0.8, getZ());
 

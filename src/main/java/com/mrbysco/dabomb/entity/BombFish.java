@@ -24,14 +24,6 @@ public class BombFish extends ThrowableItemProjectile {
 		super(entityType, level);
 	}
 
-	public BombFish(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.BOMB_FISH.get(), livingEntity, level);
-	}
-
-	public BombFish(Level level, double x, double y, double z) {
-		super(BombRegistry.BOMB_FISH.get(), x, y, z, level);
-	}
-
 	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.BOMB_FISH_ITEM.get();

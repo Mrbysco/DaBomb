@@ -1,15 +1,19 @@
 package com.mrbysco.dabomb.datagen;
 
 import com.mrbysco.dabomb.DaBomb;
+import com.mrbysco.dabomb.client.DefaultColorTint;
 import com.mrbysco.dabomb.registry.BombRegistry;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.ItemTags;
@@ -17,146 +21,155 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class BombDatagen {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
-		ExistingFileHelper helper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		if (event.includeServer()) {
-			generator.addProvider(true, new Recipes(packOutput, lookupProvider));
-		}
-		if (event.includeClient()) {
-			generator.addProvider(true, new Language(packOutput));
-			generator.addProvider(true, new SoundDefinitions(packOutput, helper));
-			generator.addProvider(true, new ItemModels(packOutput, helper));
-		}
+		generator.addProvider(true, new BombRecipes.Runner(packOutput, lookupProvider));
+
+		generator.addProvider(true, new BombLanguage(packOutput));
+		generator.addProvider(true, new BombSoundDefinitions(packOutput));
+		generator.addProvider(true, new BombModels(packOutput));
 	}
 
-	private static class Recipes extends RecipeProvider {
-		public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-			super(packOutput, lookupProvider);
+	private static class BombRecipes extends RecipeProvider {
+		public BombRecipes(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+			super(provider, recipeOutput);
 		}
 
 		@Override
-		protected void buildRecipes(RecipeOutput recipeOutput) {
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_ITEM.get(), 2)
+		protected void buildRecipes() {
+			shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_ITEM.get(), 2)
 					.pattern(" G ").pattern("GSG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
-					.define('S', Ingredient.of(Tags.Items.SANDS))
+					.define('G', Tags.Items.GUNPOWDERS)
+					.define('S', Tags.Items.SANDS)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.DIRT_BOMB_ITEM.get())
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.DIRT_BOMB_ITEM.get())
 					.pattern(" D ").pattern("DBD").pattern(" D ")
-					.define('D', Ingredient.of(ItemTags.DIRT))
+					.define('D', ItemTags.DIRT)
 					.define('B', BombRegistry.BOMB_ITEM.get())
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.FLOWER_BOMB_ITEM.get())
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.FLOWER_BOMB_ITEM.get())
 					.pattern(" F ").pattern("FBF").pattern(" F ")
-					.define('F', Ingredient.of(ItemTags.SMALL_FLOWERS))
+					.define('F', ItemTags.SMALL_FLOWERS)
 					.define('B', BombRegistry.BOMB_ITEM.get())
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.LAVA_BOMB_ITEM.get())
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.LAVA_BOMB_ITEM.get())
 					.pattern(" G ").pattern("GLG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
+					.define('G', Tags.Items.GUNPOWDERS)
 					.define('L', Items.LAVA_BUCKET)
 					.unlockedBy("has_lava_bucket", has(Items.LAVA_BUCKET))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.WATER_BOMB_ITEM.get())
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.WATER_BOMB_ITEM.get())
 					.pattern(" G ").pattern("GWG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
+					.define('G', Tags.Items.GUNPOWDERS)
 					.define('W', Items.WATER_BUCKET)
 					.unlockedBy("has_water_bucket", has(Items.WATER_BUCKET))
-					.save(recipeOutput);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_BOMB_ITEM.get())
+					.save(this.output);
+			shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_BOMB_ITEM.get())
 					.requires(BombRegistry.BOMB_ITEM.get()).requires(Items.HONEY_BOTTLE)
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(recipeOutput);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_BOMB_ITEM.get())
-					.requires(BombRegistry.BOMB_ITEM.get()).requires(Ingredient.of(Tags.Items.SLIMEBALLS))
+					.save(this.output);
+			shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_BOMB_ITEM.get())
+					.requires(BombRegistry.BOMB_ITEM.get()).requires(Tags.Items.SLIME_BALLS)
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(recipeOutput);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.DRY_BOMB_ITEM.get())
+					.save(this.output);
+			shapeless(RecipeCategory.COMBAT, BombRegistry.DRY_BOMB_ITEM.get())
 					.requires(BombRegistry.BOMB_ITEM.get()).requires(Items.SPONGE)
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_FISH_ITEM.get(), 2)
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_FISH_ITEM.get(), 2)
 					.pattern(" P ").pattern("GSG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
-					.define('S', Ingredient.of(Tags.Items.SANDS))
+					.define('G', Tags.Items.GUNPOWDERS)
+					.define('S', Tags.Items.SANDS)
 					.define('P', Items.PUFFERFISH)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.BEE_BOMB_ITEM.get(), 2)
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.BEE_BOMB_ITEM.get(), 2)
 					.pattern("GBG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
+					.define('G', Tags.Items.GUNPOWDERS)
 					.define('B', Items.BEEHIVE)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.ENDER_BOMB_ITEM.get(), 2)
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.ENDER_BOMB_ITEM.get(), 2)
 					.pattern("GEG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
-					.define('E', Ingredient.of(Tags.Items.ENDER_PEARLS))
+					.define('G', Tags.Items.GUNPOWDERS)
+					.define('E', Tags.Items.ENDER_PEARLS)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.CLUSTER_BOMB_ITEM.get(), 1)
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.CLUSTER_BOMB_ITEM.get(), 1)
 					.pattern("GEG").pattern(" G ")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
+					.define('G', Tags.Items.GUNPOWDERS)
 					.define('E', Ingredient.of(BombRegistry.BOMB_ITEM.get()))
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
+					.save(this.output);
 
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.DYNAMITE_ITEM.get(), 3)
+			shaped(RecipeCategory.COMBAT, BombRegistry.DYNAMITE_ITEM.get(), 3)
 					.pattern(" # ").pattern("GSG").pattern("GGG")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
-					.define('S', Ingredient.of(Tags.Items.SANDS))
-					.define('#', Ingredient.of(Tags.Items.STRINGS))
+					.define('G', Tags.Items.GUNPOWDERS)
+					.define('S', Tags.Items.SANDS)
+					.define('#', Tags.Items.STRINGS)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_DYNAMITE_ITEM.get())
+					.save(this.output);
+			shapeless(RecipeCategory.COMBAT, BombRegistry.STICKY_DYNAMITE_ITEM.get())
 					.requires(BombRegistry.DYNAMITE_ITEM.get()).requires(Items.HONEY_BOTTLE)
 					.unlockedBy("has_dynamite", has(BombRegistry.DYNAMITE_ITEM.get()))
-					.save(recipeOutput);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_DYNAMITE_ITEM.get())
-					.requires(BombRegistry.DYNAMITE_ITEM.get()).requires(Ingredient.of(Tags.Items.SLIMEBALLS))
+					.save(this.output);
+			shapeless(RecipeCategory.COMBAT, BombRegistry.BOUNCY_DYNAMITE_ITEM.get())
+					.requires(BombRegistry.DYNAMITE_ITEM.get()).requires(Tags.Items.SLIME_BALLS)
 					.unlockedBy("has_dynamite", has(BombRegistry.DYNAMITE_ITEM.get()))
-					.save(recipeOutput);
+					.save(this.output);
 
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.C4_ITEM.get(), 2)
+			shaped(RecipeCategory.COMBAT, BombRegistry.C4_ITEM.get(), 2)
 					.pattern(" R ").pattern("GSG").pattern("GHG")
-					.define('G', Ingredient.of(Tags.Items.GUNPOWDERS))
-					.define('S', Ingredient.of(Tags.Items.SANDS))
-					.define('R', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+					.define('G', Tags.Items.GUNPOWDERS)
+					.define('S', Tags.Items.SANDS)
+					.define('R', Tags.Items.DUSTS_REDSTONE)
 					.define('H', Items.HONEY_BOTTLE)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
-					.save(recipeOutput);
-			ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BombRegistry.REMOTE.get(), 1)
+					.save(this.output);
+			shaped(RecipeCategory.COMBAT, BombRegistry.REMOTE.get(), 1)
 					.pattern(" RR").pattern("II ").pattern("II ")
-					.define('I', Ingredient.of(Tags.Items.INGOTS_IRON))
-					.define('R', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+					.define('I', Tags.Items.INGOTS_IRON)
+					.define('R', Tags.Items.DUSTS_REDSTONE)
 					.unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-					.save(recipeOutput);
+					.save(this.output);
+		}
+
+		public static class Runner extends RecipeProvider.Runner {
+			public Runner(PackOutput output, CompletableFuture<Provider> completableFuture) {
+				super(output, completableFuture);
+			}
+
+			@Override
+			protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+				return new BombRecipes(provider, recipeOutput);
+			}
+
+			@Override
+			public String getName() {
+				return "DaBomb Recipes";
+			}
 		}
 	}
 
-	private static class Language extends LanguageProvider {
-		public Language(PackOutput packOutput) {
+	private static class BombLanguage extends LanguageProvider {
+		public BombLanguage(PackOutput packOutput) {
 			super(packOutput, DaBomb.MOD_ID, "en_us");
 		}
 
@@ -213,14 +226,14 @@ public class BombDatagen {
 		}
 
 		public void addSubtitle(SoundEvent sound, String name) {
-			String path = DaBomb.MOD_ID + ".subtitle." + sound.getLocation().getPath();
+			String path = DaBomb.MOD_ID + ".subtitle." + sound.location().getPath();
 			this.add(path, name);
 		}
 	}
 
-	private static class SoundDefinitions extends SoundDefinitionsProvider {
-		public SoundDefinitions(PackOutput packOutput, ExistingFileHelper helper) {
-			super(packOutput, DaBomb.MOD_ID, helper);
+	private static class BombSoundDefinitions extends SoundDefinitionsProvider {
+		public BombSoundDefinitions(PackOutput packOutput) {
+			super(packOutput, DaBomb.MOD_ID);
 		}
 
 		@Override
@@ -248,22 +261,19 @@ public class BombDatagen {
 		}
 	}
 
-	private static class ItemModels extends ItemModelProvider {
-		public ItemModels(PackOutput packOutput, ExistingFileHelper helper) {
-			super(packOutput, DaBomb.MOD_ID, helper);
+	private static class BombModels extends ModelProvider {
+		public BombModels(PackOutput packOutput) {
+			super(packOutput, DaBomb.MOD_ID);
 		}
 
 		@Override
-		protected void registerModels() {
-			BombRegistry.ITEMS.getEntries().stream()
-					.forEach(item -> {
-						String path = Objects.requireNonNull(item.getId()).getPath();
-						if (path.equals("water_bomb")) {
-							withExistingParent(path, mcLoc("item/generated"))
-									.texture("layer0", modLoc(ITEM_FOLDER + "/" + "fluid_bomb_overlay"))
-									.texture("layer1", modLoc(ITEM_FOLDER + "/" + "fluid_bomb"));
+		protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+			BombRegistry.ITEMS.getEntries()
+					.forEach(deferredItem -> {
+						if (deferredItem.getId().equals(BombRegistry.WATER_BOMB_ITEM.getId())) {
+							itemModels.generateItemWithTintedOverlay(deferredItem.get(), new DefaultColorTint());
 						} else {
-							singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
+							itemModels.generateFlatItem(deferredItem.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 						}
 					});
 		}

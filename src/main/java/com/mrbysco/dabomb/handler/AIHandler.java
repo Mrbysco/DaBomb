@@ -52,7 +52,8 @@ public class AIHandler {
 							mob.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(item));
 							if (throwableItem instanceof C4Item) {
 								mob.goalSelector.addGoal(1, new PlantC4Goal(mob));
-								mob.targetSelector.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal<?> targetGoal && targetGoal.targetType == Player.class);
+								mob.targetSelector.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal<?> targetGoal &&
+										targetGoal.targetType == Player.class);
 								mob.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(mob, Player.class, false, false));
 							} else {
 								mob.goalSelector.addGoal(1, new ShootBombGoal(mob,
@@ -84,7 +85,7 @@ public class AIHandler {
 							return;
 						}
 						ResourceLocation registry = ResourceLocation.tryParse(values[0]);
-						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(registry);
+						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(registry);
 						List<BombData> dataList = bomberMap.getOrDefault(entityType, new ArrayList<>());
 
 						Supplier<? extends Item> itemSupplier = getItemForName(values[1]);

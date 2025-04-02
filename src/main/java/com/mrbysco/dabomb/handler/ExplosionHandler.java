@@ -18,6 +18,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
@@ -85,7 +86,7 @@ public class ExplosionHandler {
 			} else if (explosion.getDirectSourceEntity() instanceof BeeBomb beeBomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (int i = 0; i < BombConfig.COMMON.beeAmount.get(); i++) {
-					Bee bee = EntityType.BEE.create(level);
+					Bee bee = EntityType.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
 					if (bee != null) {
 						bee.setPosRaw(beeBomb.getX(), beeBomb.getY() + 0.5D, beeBomb.getZ());
 						if (!livingEntities.isEmpty()) {
@@ -96,7 +97,7 @@ public class ExplosionHandler {
 					}
 				}
 			} else if (explosion.getDirectSourceEntity() instanceof FlowerBomb flowerBomb) {
-				Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.getTag(BlockTags.SMALL_FLOWERS);
+				Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.get(BlockTags.SMALL_FLOWERS);
 				if (optionalTag.isPresent()) {
 					for (BlockPos pos : affectedBlocks) {
 						BlockState state = level.getBlockState(pos);
@@ -109,7 +110,7 @@ public class ExplosionHandler {
 										level.setBlockAndUpdate(pos, flowerState);
 									}
 									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
-										Bee bee = EntityType.BEE.create(level);
+										Bee bee = EntityType.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
 										if (bee != null) {
 											bee.setPosRaw(flowerBomb.getX(), flowerBomb.getY() + 0.5D, flowerBomb.getZ());
 											level.addFreshEntity(bee);

@@ -24,14 +24,6 @@ public class StickyDynamite extends ThrowableItemProjectile {
 		super(entityType, level);
 	}
 
-	public StickyDynamite(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.STICKY_DYNAMITE.get(), livingEntity, level);
-	}
-
-	public StickyDynamite(Level level, double x, double y, double z) {
-		super(BombRegistry.STICKY_DYNAMITE.get(), x, y, z, level);
-	}
-
 	@Override
 	protected Item getDefaultItem() {
 		return BombRegistry.STICKY_DYNAMITE_ITEM.get();

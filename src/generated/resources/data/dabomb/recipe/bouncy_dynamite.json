@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "dabomb:dynamite"
-    },
-    {
-      "tag": "c:slimeballs"
-    }
+    "dabomb:dynamite",
+    "#c:slime_balls"
   ],
   "result": {
     "count": 1,

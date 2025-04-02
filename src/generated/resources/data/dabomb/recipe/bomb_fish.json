@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "G": {
-      "tag": "c:gunpowders"
-    },
-    "P": {
-      "item": "minecraft:pufferfish"
-    },
-    "S": {
-      "tag": "c:sands"
-    }
+    "G": "#c:gunpowders",
+    "P": "minecraft:pufferfish",
+    "S": "#c:sands"
   },
   "pattern": [
     " P ",

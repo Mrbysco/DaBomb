@@ -5,6 +5,7 @@ import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -27,14 +28,6 @@ public class C4 extends ThrowableItemProjectile {
 
 	public C4(EntityType<? extends C4> entityType, Level level) {
 		super(entityType, level);
-	}
-
-	public C4(Level level, LivingEntity livingEntity) {
-		super(BombRegistry.C4_ENTITY.get(), livingEntity, level);
-	}
-
-	public C4(Level level, double x, double y, double z) {
-		super(BombRegistry.C4_ENTITY.get(), x, y, z, level);
 	}
 
 	@Override
@@ -122,7 +115,8 @@ public class C4 extends ThrowableItemProjectile {
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Tags.Items.TOOLS_SHEAR) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
-			this.spawnAtLocation(BombRegistry.C4_ITEM.get());
+			if (this.level() instanceof ServerLevel serverLevel)
+				this.spawnAtLocation(serverLevel, BombRegistry.C4_ITEM.get());
 			if (random.nextDouble() <= 0.075D) {
 				this.level().playSound(null, blockPosition(), BombRegistry.BOMB_DEFUSED.get(), SoundSource.NEUTRAL, 0.65F, 1.0F);
 			}

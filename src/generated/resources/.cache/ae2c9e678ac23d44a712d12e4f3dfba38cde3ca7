@@ -1,4 +1,4 @@
-// 1.21	2024-06-27T19:09:46.4494068	Recipes
+// 1.21.4	2025-04-02T22:44:04.154087	DaBomb Recipes
 cf95f9f74f91f3f4d466c5b66f79119467843dc0 data/dabomb/advancement/recipes/combat/bee_bomb.json
 4c9c3dce59dd98aaddd920c2bc96487ffcc39538 data/dabomb/advancement/recipes/combat/bomb.json
 fa805c12b0c02f5847e423c69049a6fb9a44d39b data/dabomb/advancement/recipes/combat/bomb_fish.json
@@ -16,20 +16,20 @@ f1649a7d1731d9f0558648648f8e6b73634ebe63 data/dabomb/advancement/recipes/combat/
 c2eaa788e184a8be74d8fd8306d930db01f562a8 data/dabomb/advancement/recipes/combat/sticky_bomb.json
 0dd6700bbbee09735d98a3c1c779d40befc107c8 data/dabomb/advancement/recipes/combat/sticky_dynamite.json
 c99548760e7d1eb325b8e204316ed8499909b824 data/dabomb/advancement/recipes/combat/water_bomb.json
-67a231f2cbe72613dbeb355a88ed0cbb3ab832ae data/dabomb/recipe/bee_bomb.json
-9891e7d810579c16a8f8c463e0ff02439784a397 data/dabomb/recipe/bomb.json
-dd61465cdaea15042495c653dd979bb277cae04a data/dabomb/recipe/bomb_fish.json
-e6d69b849918b5d8de9b0f4d7437c2292819bebc data/dabomb/recipe/bouncy_bomb.json
-7b1e9c8e1fd29954fa9048ba6c27ceb44ee613ba data/dabomb/recipe/bouncy_dynamite.json
-b7160860aee456682a787c78cb1b102c3a075ead data/dabomb/recipe/c4.json
-ea1d0bb8c539e7efa671e2e4bc432c4c49f7ad11 data/dabomb/recipe/cluster_bomb.json
-1c20c171796c27bf788b30c0f385bf65a3bec592 data/dabomb/recipe/dirt_bomb.json
-c145b097eeb855b6863747f29713000ee10edcce data/dabomb/recipe/dry_bomb.json
-45878c1c99018a1fde289523c43d49ea748a82b1 data/dabomb/recipe/dynamite.json
-7303161fb87c34ac2fc4e9c2cc08e0c679c8f90f data/dabomb/recipe/ender_bomb.json
-b3e7d7e8d2aedc55eeec2aef8fe268d2e95f8fd5 data/dabomb/recipe/flower_bomb.json
-57faca4344dcbd869a3cca642bfd38234ef6cdaa data/dabomb/recipe/lava_bomb.json
-10dc51c6ab89b0c808e0da5e8e058a8d441a40f4 data/dabomb/recipe/remote.json
-e4370076c9093e65d18550d763c10dc20e52b79c data/dabomb/recipe/sticky_bomb.json
-b4ec4183d507ea9bc77a8e68b8b46ea10c87cd99 data/dabomb/recipe/sticky_dynamite.json
-b9ae63f24040815286d475f2113e6a65acb0decc data/dabomb/recipe/water_bomb.json
+a2a70a59d37269c860c88b657a2bf647950d8d71 data/dabomb/recipe/bee_bomb.json
+b36430c0941ffa6b92c3764988c83756c88de051 data/dabomb/recipe/bomb.json
+db8bf9edf193addea5a5e4b9f34b33192c48fe4c data/dabomb/recipe/bomb_fish.json
+7a7d7d490d75c3c664871afc1469fce09edc99d7 data/dabomb/recipe/bouncy_bomb.json
+cfbffa762c709762535b77fa8e59b14f0e3bc091 data/dabomb/recipe/bouncy_dynamite.json
+689e7269c91ae6b9ad51ea9dc4c22e0955680ee1 data/dabomb/recipe/c4.json
+8717fb9fb1447fed2937d58f2b39340d9e03a704 data/dabomb/recipe/cluster_bomb.json
+fb5f50318c2d8771b5d7a2a0ae2b23bf7d7cae6b data/dabomb/recipe/dirt_bomb.json
+9d2f02cf598cfb5d6030c87185166f52a084b07f data/dabomb/recipe/dry_bomb.json
+24a6822f5c33292560bcb9e7971d28c9ef450005 data/dabomb/recipe/dynamite.json
+4bd4bb0c44e450605935121f456b88da3d5498de data/dabomb/recipe/ender_bomb.json
+5aa8bdc17827c6b1c845f6729f8ff7e0b542b565 data/dabomb/recipe/flower_bomb.json
+698ae498aea138bb020d85a9f09207c304a92555 data/dabomb/recipe/lava_bomb.json
+a5101187d1e619137e03389079908b557327c35b data/dabomb/recipe/remote.json
+91bfda0ddffbfe147a783c085b217308381c48ea data/dabomb/recipe/sticky_bomb.json
+30efd8e69548e4d1dd5fb63a65593644b21664f1 data/dabomb/recipe/sticky_dynamite.json
+c9ccbb5e4251eb012c2d28e33d08bbdad5bfbac8 data/dabomb/recipe/water_bomb.json

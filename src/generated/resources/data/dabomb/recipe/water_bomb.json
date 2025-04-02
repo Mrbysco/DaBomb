@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "G": {
-      "tag": "c:gunpowders"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
-    }
+    "G": "#c:gunpowders",
+    "W": "minecraft:water_bucket"
   },
   "pattern": [
     " G ",

@@ -1,5 +1,6 @@
 package com.mrbysco.dabomb.client;
 
+import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.EntityType;
@@ -10,10 +11,12 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import java.util.List;
 
 public class ClientHandler {
-	public static void registerItemColors(final RegisterColorHandlersEvent.Item event) {
-		event.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 4159204, BombRegistry.WATER_BOMB_ITEM.get());
+	public static void registerItemTint(final RegisterColorHandlersEvent.ItemTintSources event) {
+		event.register(DaBomb.modLoc("default_color"), DefaultColorTint.MAP_CODEC);
 	}
 
+
+	@SuppressWarnings("unchecked")
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
 		List<EntityType<?>> specialTypes = List.of(BombRegistry.BOMB_FRAGMENT.get());
 		for (var registryObject : BombRegistry.ENTITY_TYPES.getEntries()) {

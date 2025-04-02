@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "G": {
-      "tag": "c:gunpowders"
-    }
+    "E": "#c:ender_pearls",
+    "G": "#c:gunpowders"
   },
   "pattern": [
     "GEG",

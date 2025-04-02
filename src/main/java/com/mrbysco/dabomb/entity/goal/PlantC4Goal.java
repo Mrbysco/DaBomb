@@ -4,7 +4,9 @@ import com.mrbysco.dabomb.entity.C4;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -82,8 +84,8 @@ public class PlantC4Goal extends Goal {
 
 	private void plantC4() {
 		Level level = bomberMob.level();
-		if (!level.isClientSide) {
-			C4 c4 = BombRegistry.C4_ENTITY.get().create(level);
+		if (level instanceof ServerLevel serverLevel) {
+			C4 c4 = BombRegistry.C4_ENTITY.get().create(serverLevel, EntitySpawnReason.EVENT);
 			if (c4 != null) {
 				level.playSound((Player) null, bomberMob.getX(), bomberMob.getY(), bomberMob.getZ(),
 						BombRegistry.C4_SHOOT.get(), SoundSource.HOSTILE, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));

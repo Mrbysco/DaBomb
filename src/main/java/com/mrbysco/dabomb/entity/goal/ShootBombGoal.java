@@ -1,9 +1,11 @@
 package com.mrbysco.dabomb.entity.goal;
 
 import com.mrbysco.dabomb.item.ThrowableItem;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -109,8 +111,8 @@ public class ShootBombGoal extends Goal {
 
 	private void shootBomb() {
 		Level level = bomber.level();
-		if (!level.isClientSide) {
-			if (projectile.create(level) instanceof ThrowableItemProjectile bomb) {
+		if (level instanceof ServerLevel serverLevel) {
+			if (projectile.create(serverLevel, EntitySpawnReason.EVENT) instanceof ThrowableItemProjectile bomb) {
 				level.playSound((Player) null, bomber.getX(), bomber.getY(), bomber.getZ(),
 						soundEvent, SoundSource.HOSTILE, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 

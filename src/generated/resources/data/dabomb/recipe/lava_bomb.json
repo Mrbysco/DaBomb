@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "G": {
-      "tag": "c:gunpowders"
-    },
-    "L": {
-      "item": "minecraft:lava_bucket"
-    }
+    "G": "#c:gunpowders",
+    "L": "minecraft:lava_bucket"
   },
   "pattern": [
     " G ",

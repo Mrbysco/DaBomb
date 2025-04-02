@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "G": {
-      "tag": "c:gunpowders"
-    },
-    "S": {
-      "tag": "c:sands"
-    }
+    "G": "#c:gunpowders",
+    "S": "#c:sands"
   },
   "pattern": [
     " G ",

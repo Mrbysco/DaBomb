@@ -4,7 +4,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -52,14 +53,14 @@ public class ThrowableItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-		ItemStack itemstack = player.getItemInHand(interactionHand);
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
 		if (getSoundEvent() != null) {
 			level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), getSoundEvent(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 		}
-		player.getCooldowns().addCooldown(this, cooldown);
+		player.getCooldowns().addCooldown(itemstack, cooldown);
 		if (!level.isClientSide && getProjectile() != null) {
-			if (getProjectile().create(level) instanceof ThrowableItemProjectile projectile) {
+			if (getProjectile().create(level, EntitySpawnReason.SPAWN_ITEM_USE) instanceof ThrowableItemProjectile projectile) {
 				projectile.setPosRaw(player.getX(), player.getEyeY() - (double) 0.1F, player.getZ());
 				projectile.setItem(itemstack);
 				projectile.setOwner(player);
@@ -73,6 +74,6 @@ public class ThrowableItem extends Item {
 			itemstack.shrink(1);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 }
