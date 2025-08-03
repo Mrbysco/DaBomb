@@ -12,6 +12,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -52,8 +53,9 @@ public class ThrowableItem extends Item {
 		return inaccuracy;
 	}
 
+	@NotNull
 	@Override
-	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (getSoundEvent() != null) {
 			level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), getSoundEvent(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));

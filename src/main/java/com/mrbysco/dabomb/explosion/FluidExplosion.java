@@ -137,7 +137,7 @@ public class FluidExplosion extends ServerExplosion {
 						float f1 = this.damageCalculator.getKnockbackMultiplier(entity);
 						if (flag) {
 							float seenPercentage = !flag && f1 == 0.0F ? 0.0F : getSeenPercent(this.center(), entity);
-							entity.hurt(this.damageSource, this.damageCalculator.getEntityDamageAmount(this, entity, seenPercentage));
+							entity.hurtServer(this.level, this.damageSource, this.damageCalculator.getEntityDamageAmount(this, entity, seenPercentage));
 						}
 
 						double d13 = (1.0 - d11) * (double) getSeenPercent(this.center(), entity) * (double) this.damageCalculator.getKnockbackMultiplier(entity);

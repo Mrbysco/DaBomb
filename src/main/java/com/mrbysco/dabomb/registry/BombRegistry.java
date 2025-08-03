@@ -23,7 +23,6 @@ import com.mrbysco.dabomb.item.RemoteItem;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -40,7 +39,7 @@ import java.util.function.Supplier;
 
 public class BombRegistry {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(DaBomb.MOD_ID);
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, DaBomb.MOD_ID);
+	public static final DeferredRegister.Entities ENTITY_TYPES = DeferredRegister.createEntities(DaBomb.MOD_ID);
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Registries.SOUND_EVENT, DaBomb.MOD_ID);
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, DaBomb.MOD_ID);
 
@@ -81,78 +80,109 @@ public class BombRegistry {
 			BombRegistry.C4_ENTITY::get, BombRegistry.C4_SHOOT, 14, -20.0F, 0.45F, 1.0F));
 	public static final DeferredItem<RemoteItem> REMOTE = ITEMS.registerItem("remote", RemoteItem::new);
 
-	public static final Supplier<EntityType<Bomb>> BOMB = ENTITY_TYPES.register("bomb", () ->
-			EntityType.Builder.<Bomb>of(Bomb::new, MobCategory.MISC)
+	public static final Supplier<EntityType<Bomb>> BOMB = ENTITY_TYPES.registerEntityType("bomb",
+			Bomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bomb")));
-	public static final Supplier<EntityType<BouncyBomb>> BOUNCY_BOMB = ENTITY_TYPES.register("bouncy_bomb", () ->
-			EntityType.Builder.<BouncyBomb>of(BouncyBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<BouncyBomb>> BOUNCY_BOMB = ENTITY_TYPES.registerEntityType("bouncy_bomb",
+			BouncyBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bouncy_bomb")));
-	public static final Supplier<EntityType<StickyBomb>> STICKY_BOMB = ENTITY_TYPES.register("sticky_bomb", () ->
-			EntityType.Builder.<StickyBomb>of(StickyBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<StickyBomb>> STICKY_BOMB = ENTITY_TYPES.registerEntityType("sticky_bomb",
+			StickyBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("sticky_bomb")));
-	public static final Supplier<EntityType<BombFish>> BOMB_FISH = ENTITY_TYPES.register("bomb_fish", () ->
-			EntityType.Builder.<BombFish>of(BombFish::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<BombFish>> BOMB_FISH = ENTITY_TYPES.registerEntityType("bomb_fish",
+			BombFish::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bomb_fish")));
-	public static final Supplier<EntityType<DirtBomb>> DIRT_BOMB = ENTITY_TYPES.register("dirt_bomb", () ->
-			EntityType.Builder.<DirtBomb>of(DirtBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<DirtBomb>> DIRT_BOMB = ENTITY_TYPES.registerEntityType("dirt_bomb",
+			DirtBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("dirt_bomb")));
-	public static final Supplier<EntityType<DryBomb>> DRY_BOMB = ENTITY_TYPES.register("dry_bomb", () ->
-			EntityType.Builder.<DryBomb>of(DryBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<DryBomb>> DRY_BOMB = ENTITY_TYPES.registerEntityType("dry_bomb",
+			DryBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("dry_bomb")));
-	public static final Supplier<EntityType<WaterBomb>> WATER_BOMB = ENTITY_TYPES.register("water_bomb", () ->
-			EntityType.Builder.<WaterBomb>of(WaterBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<WaterBomb>> WATER_BOMB = ENTITY_TYPES.registerEntityType("water_bomb",
+			WaterBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("water_bomb")));
-	public static final Supplier<EntityType<LavaBomb>> LAVA_BOMB = ENTITY_TYPES.register("lava_bomb", () ->
-			EntityType.Builder.<LavaBomb>of(LavaBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<LavaBomb>> LAVA_BOMB = ENTITY_TYPES.registerEntityType("lava_bomb",
+			LavaBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("lava_bomb")));
-	public static final Supplier<EntityType<BeeBomb>> BEE_BOMB = ENTITY_TYPES.register("bee_bomb", () ->
-			EntityType.Builder.<BeeBomb>of(BeeBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<BeeBomb>> BEE_BOMB = ENTITY_TYPES.registerEntityType("bee_bomb",
+			BeeBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bee_bomb")));
-	public static final Supplier<EntityType<FlowerBomb>> FLOWER_BOMB = ENTITY_TYPES.register("flower_bomb", () ->
-			EntityType.Builder.<FlowerBomb>of(FlowerBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<FlowerBomb>> FLOWER_BOMB = ENTITY_TYPES.registerEntityType("flower_bomb",
+			FlowerBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("flower_bomb")));
-	public static final Supplier<EntityType<EnderBomb>> ENDER_BOMB = ENTITY_TYPES.register("ender_bomb", () ->
-			EntityType.Builder.<EnderBomb>of(EnderBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<EnderBomb>> ENDER_BOMB = ENTITY_TYPES.registerEntityType("ender_bomb",
+			EnderBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("ender_bomb")));
-	public static final Supplier<EntityType<ClusterBomb>> CLUSTER_BOMB = ENTITY_TYPES.register("cluster_bomb", () ->
-			EntityType.Builder.<ClusterBomb>of(ClusterBomb::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<ClusterBomb>> CLUSTER_BOMB = ENTITY_TYPES.registerEntityType("cluster_bomb",
+			ClusterBomb::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("cluster_bomb")));
-	public static final Supplier<EntityType<BombFragment>> BOMB_FRAGMENT = ENTITY_TYPES.register("bomb_fragment", () ->
-			EntityType.Builder.<BombFragment>of(BombFragment::new, MobCategory.MISC)
+	);
+	public static final Supplier<EntityType<BombFragment>> BOMB_FRAGMENT = ENTITY_TYPES.registerEntityType("bomb_fragment",
+			BombFragment::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.15625F, 0.15625F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bomb_fragment")));
-	public static final Supplier<EntityType<Dynamite>> DYNAMITE = ENTITY_TYPES.register("dynamite", () ->
-			EntityType.Builder.<Dynamite>of(Dynamite::new, MobCategory.MISC)
-					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("dynamite")));
-	public static final Supplier<EntityType<StickyDynamite>> STICKY_DYNAMITE = ENTITY_TYPES.register("sticky_dynamite", () ->
-			EntityType.Builder.<StickyDynamite>of(StickyDynamite::new, MobCategory.MISC)
-					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("sticky_dynamite")));
-	public static final Supplier<EntityType<BouncyDynamite>> BOUNCY_DYNAMITE = ENTITY_TYPES.register("bouncy_dynamite", () ->
-			EntityType.Builder.<BouncyDynamite>of(BouncyDynamite::new, MobCategory.MISC)
-					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("bouncy_dynamite")));
-	public static final Supplier<EntityType<C4>> C4_ENTITY = ENTITY_TYPES.register("c4", () ->
-			EntityType.Builder.<C4>of(C4::new, MobCategory.MISC)
-					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
-					.build(bombEntityId("c4")));
+	);
 
-	private static ResourceKey<EntityType<?>> bombEntityId(String path) {
-		return ResourceKey.create(Registries.ENTITY_TYPE, DaBomb.modLoc(path));
-	}
+	public static final Supplier<EntityType<Dynamite>> DYNAMITE = ENTITY_TYPES.registerEntityType("dynamite",
+			Dynamite::new,
+			MobCategory.MISC,
+			builder -> builder
+					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+	);
+	public static final Supplier<EntityType<StickyDynamite>> STICKY_DYNAMITE = ENTITY_TYPES.registerEntityType("sticky_dynamite",
+			StickyDynamite::new,
+			MobCategory.MISC,
+			builder -> builder
+					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+	);
+	public static final Supplier<EntityType<BouncyDynamite>> BOUNCY_DYNAMITE = ENTITY_TYPES.registerEntityType("bouncy_dynamite",
+			BouncyDynamite::new,
+			MobCategory.MISC,
+			builder -> builder
+					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+	);
+	public static final Supplier<EntityType<C4>> C4_ENTITY = ENTITY_TYPES.registerEntityType("c4",
+			C4::new,
+			MobCategory.MISC,
+			builder -> builder
+					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+	);
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
 			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_shoot")));

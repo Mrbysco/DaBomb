@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -18,9 +19,9 @@ public class C4Item extends ThrowableItem {
 		super(properties, entityTypeSupplier, soundSupplier, cooldown, z, velocity, inaccuracy);
 	}
 
-
+	@NotNull
 	@Override
-	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
 		if (player.getInventory().contains(new ItemStack(BombRegistry.REMOTE.get()))) {
 			super.use(level, player, hand);
 		}

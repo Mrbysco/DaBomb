@@ -104,10 +104,6 @@ public class AIHandler {
 
 	private static Supplier<? extends Item> getItemForName(String name) {
 		return switch (name) {
-			default -> {
-				DaBomb.LOGGER.error("Invalid bomb {} in `bomberman` config", name);
-				yield (() -> Items.AIR);
-			}
 			case "bomb" -> BombRegistry.BOMB_ITEM;
 			case "bouncy_bomb" -> BombRegistry.BOUNCY_BOMB_ITEM;
 			case "sticky_bomb" -> BombRegistry.STICKY_BOMB_ITEM;
@@ -124,6 +120,10 @@ public class AIHandler {
 			case "sticky_dynamite" -> BombRegistry.STICKY_DYNAMITE_ITEM;
 			case "bouncy_dynamite" -> BombRegistry.BOUNCY_DYNAMITE_ITEM;
 			case "c4" -> BombRegistry.C4_ITEM;
+			default -> {
+				DaBomb.LOGGER.error("Invalid bomb {} in `bomberman` config", name);
+				yield (() -> Items.AIR);
+			}
 		};
 	}
 
