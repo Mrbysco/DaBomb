@@ -12,6 +12,7 @@ import com.mrbysco.dabomb.entity.WaterBomb;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -42,7 +43,7 @@ public class ExplosionHandler {
 		final Level level = event.getLevel();
 		List<BlockPos> affectedBlocks = event.getAffectedBlocks();
 		List<Entity> affectedEntities = event.getAffectedEntities();
-		if (!level.isClientSide) {
+		if (level instanceof ServerLevel serverLevel) {
 			if (explosion.getDirectSourceEntity() instanceof DirtBomb) {
 				for (BlockPos pos : affectedBlocks) {
 					BlockState state = level.getBlockState(pos);
@@ -125,12 +126,20 @@ public class ExplosionHandler {
 			} else if (explosion.getDirectSourceEntity() instanceof EnderBomb bomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (LivingEntity livingEntity : livingEntities) {
-					double targetX = livingEntity.getX() + (level.random.nextDouble() - 0.5D) * 64.0D;
-					double targetY = livingEntity.getY() + (double) (level.random.nextInt(64) - 32);
-					double targetZ = livingEntity.getZ() + (level.random.nextDouble() - 0.5D) * 64.0D;
-					livingEntity.randomTeleport(targetX, targetY, targetZ, true);
-					level.playSound((Player) null, targetX, targetY, targetZ, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
-					livingEntity.hurt(bomb.damageSources().explosion(explosion), 2.0F);
+					int maxTries = 5;
+					for (int tries = 0; tries < maxTries; tries++) {
+						double targetX = livingEntity.getX() + (level.random.nextDouble() - 0.5D) * 64.0D;
+						double targetY = livingEntity.getY() + (double) (level.random.nextInt(64) - 32);
+						double targetZ = livingEntity.getZ() + (level.random.nextDouble() - 0.5D) * 64.0D;
+						if (livingEntity instanceof Player player && player.isCreative()) {
+							continue; // Skip teleporting players in creative mode
+						}
+						if (livingEntity.randomTeleport(targetX, targetY, targetZ, true)) {
+							level.playSound((Player) null, targetX, targetY, targetZ, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+							break;
+						}
+					}
+					livingEntity.hurtServer(serverLevel, bomb.damageSources().explosion(explosion), 2.0F);
 					affectedEntities.remove(livingEntity);
 				}
 			}
