@@ -23,6 +23,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -206,6 +207,36 @@ public class BombDatagen {
 
 			this.addSubtitle(BombRegistry.BOMB_PLANTED, "Bomb has been planted");
 			this.addSubtitle(BombRegistry.BOMB_DEFUSED, "Bomb has been defused");
+
+			this.addConfig("bomb", "Bomb", "Bomb settings");
+			this.addConfig("beeAmount", "Bee Bomb Amount", "Defines the amount of bees released by Bee bomb");
+			this.addConfig("beeBombRadius", "Bee Bomb Radius", "Defines the blast radius of the Bee bomb");
+			this.addConfig("bombRadius", "Bomb Radius", "Defines the blast radius of the regular Bomb");
+			this.addConfig("bombFishRadius", "Bomb Fish Radius", "Defines the blast radius of the Bomb fish");
+			this.addConfig("bouncyBombRadius", "Bouncy Bomb Radius", "Defines the blast radius of the Bouncy bomb");
+			this.addConfig("dirtBombRadius", "Dirt Bomb Radius", "Defines the blast radius of the Dirt bomb");
+			this.addConfig("dryBombRadius", "Dry Bomb Radius", "Defines the blast radius of the Dry bomb");
+			this.addConfig("enderBombRadius", "Ender Bomb Radius", "Defines the blast radius of the Ender bomb");
+			this.addConfig("flowerBombRadius", "Flower Bomb Radius", "Defines the blast radius of the Flower bomb");
+			this.addConfig("flowerBombChance", "Flower Bomb Chance", "Defines the chance that the Flower bomb will place a random flower per valid location in the blast radius");
+			this.addConfig("flowerBombBeeChance", "Flower Bomb Bee Chance", "Defines the chance that the Flower bomb will spawn a bee per valid location in the blast radius");
+			this.addConfig("lavaBombRadius", "Lava Bomb Radius", "Defines the blast radius of the Lava bomb");
+			this.addConfig("stickyBombRadius", "Sticky Bomb Radius", "Defines the blast radius of the Sticky bomb");
+			this.addConfig("waterBombRadius", "Water Bomb Radius", "Defines the blast radius of the Water bomb");
+			this.addConfig("clusterBombRadius", "Cluster Bomb Radius", "Defines the blast radius of the Cluster bomb");
+			this.addConfig("bombFragmentRadius", "Bomb Fragment Radius", "Defines the blast radius of the Cluster Bomb's Fragment");
+
+			this.addConfig("dynamite", "Dynamite", "Dynamite settings");
+			this.addConfig("dynamiteRadius", "Dynamite Radius", "Defines the blast radius of the Dynamite");
+			this.addConfig("bouncyDynamiteRadius", "Bouncy Dynamite Radius", "Defines the blast radius of the Bouncy Dynamite");
+			this.addConfig("stickyDynamiteRadius", "Sticky Dynamite Radius", "Defines the blast radius of the Sticky Dynamite");
+
+			this.addConfig("other", "Other", "Other settings");
+			this.addConfig("c4Radius", "C4 Radius", "Defines the blast radius of the C4");
+
+			this.addConfig("bomberman", "Bomberman", "Bomberman settings");
+			this.addConfig("enableBomberman", "Enable Bomberman", "Enables the Bomberman game mode");
+			this.addConfig("bombermanList", "Bomberman List", "Defines the list of bombs that can be used in Bomberman");
 		}
 
 		public void addSubtitle(Supplier<SoundEvent> sound, String name) {
@@ -215,6 +246,19 @@ public class BombDatagen {
 		public void addSubtitle(SoundEvent sound, String name) {
 			String path = DaBomb.MOD_ID + ".subtitle." + sound.getLocation().getPath();
 			this.add(path, name);
+		}
+
+		/**
+		 * Add the translation for a config entry
+		 *
+		 * @param path        The path of the config entry
+		 * @param name        The name of the config entry
+		 * @param description The description of the config entry (optional in case of targeting "title" or similar entries that have no tooltip)
+		 */
+		private void addConfig(String path, String name, @Nullable String description) {
+			this.add(DaBomb.MOD_ID + ".configuration." + path, name);
+			if (description != null && !description.isEmpty())
+				this.add(DaBomb.MOD_ID + ".configuration." + path + ".tooltip", description);
 		}
 	}
 
