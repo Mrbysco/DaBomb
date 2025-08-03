@@ -1,3 +1,1 @@
-* Enable in-game config
-
-### The config has been adjusted so it's advised to reset it
+* Initial update to 1.21.8
