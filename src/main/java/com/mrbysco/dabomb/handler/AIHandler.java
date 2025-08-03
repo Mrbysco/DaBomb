@@ -71,7 +71,7 @@ public class AIHandler {
 	public static void refreshCache() {
 		bombermanMap.clear();
 
-		List<? extends String> bomberman = BombConfig.COMMON.bomberman.get();
+		List<? extends String> bomberman = BombConfig.COMMON.bombermanList.get();
 		Map<EntityType<?>, List<BombData>> bomberMap = new HashMap<>();
 		if (!bomberman.isEmpty()) {
 			for (String configValue : bomberman) {

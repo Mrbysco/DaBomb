@@ -36,11 +36,11 @@ public class BombConfig {
 		public final ModConfigSpec.DoubleValue c4Radius;
 
 		public final ModConfigSpec.BooleanValue enableBomberman;
-		public final ModConfigSpec.ConfigValue<List<? extends String>> bomberman;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> bombermanList;
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("Bomb settings")
-					.push("Bomb");
+					.push("bomb");
 
 			beeAmount = builder
 					.comment("Defines the amount of bees released by Bee bomb [Default: 10]")
@@ -108,7 +108,7 @@ public class BombConfig {
 
 			builder.pop();
 			builder.comment("Dynamite settings")
-					.push("Dynamite");
+					.push("dynamite");
 
 			bouncyDynamiteRadius = builder
 					.comment("Defines the blast radius of Bouncy dynamite [Default: 3.5]")
@@ -124,33 +124,33 @@ public class BombConfig {
 
 			builder.pop();
 			builder.comment("Other settings")
-					.push("Other");
+					.push("other");
 
 			c4Radius = builder
 					.comment("Defines the blast radius of C4 [Default: 4.5]")
 					.defineInRange("c4Radius", 4.5D, 0D, 20D);
 
 			builder.pop();
-			builder.comment("Bombermen settings")
-					.push("Bombermen");
+			builder.comment("Bomberman settings")
+					.push("bomberman");
 
 			enableBomberman = builder
 					.comment("Defines if there should be a chance for a mob to spawn equipped with a bomb [Default: false]")
 					.define("enableBomberman", false);
 
-			bomberman = builder
+			bombermanList = builder
 					.comment("Defines which bombs can be given to which mobs and the chance",
 							"The format \"MOBID,BOMB_TYPE,CHANCE\"",
 							"Example: \"minecraft:zombie,bomb,0.04\"",
 							"Types of bombs allowed: bomb, bouncy_bomb, sticky_bomb, bomb_fish, dirt_bomb",
 							"dry_bomb, water_bomb, lava_bomb, bee_bomb, flower_bomb, ender_bomb",
 							"cluster_bomb, dynamite, sticky_dynamite, bouncy_dynamite, c4")
-					.defineListAllowEmpty(List.of("bomberman"), () -> List.of(
+					.defineListAllowEmpty("bombermanList", () -> List.of(
 							"minecraft:zombie,c4,0.01",
 							"minecraft:zombie,bomb,0.04",
 							"minecraft:husk,bouncy_bomb,0.04",
 							"minecraft:drowned,bomb_fish,0.04"
-					), o -> (o instanceof String));
+					), String::new, o -> (o instanceof String));
 
 			builder.pop();
 		}
