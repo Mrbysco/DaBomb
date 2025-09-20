@@ -1,1 +1,1 @@
-* Initial update to 1.21.8
+* Add missing explosion particles to the Water, Lava and Dry bombs
