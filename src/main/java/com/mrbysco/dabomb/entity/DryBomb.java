@@ -8,7 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -26,6 +28,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Optional;
 
 public class DryBomb extends ThrowableItemProjectile {
 	private int bounceCount = 0;
@@ -143,9 +147,18 @@ public class DryBomb extends ThrowableItemProjectile {
 	protected void explode() {
 		if (this.level().isClientSide)
 			return;
-		FluidExplosion explosion = new FluidExplosion((ServerLevel) this.level(), this, new Vec3(this.getX(), this.getY(0.0625D) + 0.5F, this.getZ()), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
-				state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
-		explosion.explode();
+		if (this.level() instanceof ServerLevel serverLevel) {
+			FluidExplosion explosion = new FluidExplosion(serverLevel, this, new Vec3(this.getX(), this.getY(0.0625D) + 0.5F, this.getZ()), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
+					state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
+			explosion.explode();
+
+			for (ServerPlayer serverplayer : serverLevel.players()) {
+				if (serverplayer.distanceToSqr(this) < 4096.0) {
+					Optional<Vec3> optional = Optional.ofNullable(explosion.getHitPlayers().get(serverplayer));
+					serverplayer.connection.send(new ClientboundExplodePacket(this.position(), optional, ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE));
+				}
+			}
+		}
 	}
 
 	@Override
