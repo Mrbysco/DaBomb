@@ -61,7 +61,7 @@ public class ThrowableItem extends Item {
 			level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), getSoundEvent(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 		}
 		player.getCooldowns().addCooldown(itemstack, cooldown);
-		if (!level.isClientSide && getProjectile() != null) {
+		if (!level.isClientSide() && getProjectile() != null) {
 			if (getProjectile().create(level, EntitySpawnReason.SPAWN_ITEM_USE) instanceof ThrowableItemProjectile projectile) {
 				projectile.setPosRaw(player.getX(), player.getEyeY() - (double) 0.1F, player.getZ());
 				projectile.setItem(itemstack);

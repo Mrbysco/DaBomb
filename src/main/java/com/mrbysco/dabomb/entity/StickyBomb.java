@@ -48,12 +48,12 @@ public class StickyBomb extends ThrowableItemProjectile {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
+		if (this.level().isClientSide()) {
 			this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
 		}
 
 		if (tickCount >= 70 && (this.isNoGravity() || isPassenger())) {
-			if (!this.level().isClientSide) {
+			if (!this.level().isClientSide()) {
 				this.explode();
 				this.level().broadcastEntityEvent(this, (byte) 3);
 				this.discard();
@@ -75,11 +75,11 @@ public class StickyBomb extends ThrowableItemProjectile {
 	@Override
 	protected void onHitEntity(EntityHitResult hitResult) {
 		Entity entity = hitResult.getEntity();
-		if (!level().isClientSide && canHitEntity(entity)) {
+		if (!level().isClientSide() && canHitEntity(entity)) {
 			if (entity instanceof LivingEntity hitentity && getOwner() instanceof LivingEntity owner) {
 				hitentity.setLastHurtByMob(owner);
 			}
-			this.startRiding(entity, true);
+			this.startRiding(entity, true, true);
 		}
 	}
 

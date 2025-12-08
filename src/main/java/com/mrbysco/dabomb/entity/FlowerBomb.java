@@ -53,12 +53,12 @@ public class FlowerBomb extends ThrowableItemProjectile {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
+		if (this.level().isClientSide()) {
 			this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
 		}
 
 		if (tickCount >= 100) {
-			if (!this.level().isClientSide) {
+			if (!this.level().isClientSide()) {
 				this.explode();
 				this.level().broadcastEntityEvent(this, (byte) 3);
 				this.discard();
@@ -88,7 +88,7 @@ public class FlowerBomb extends ThrowableItemProjectile {
 		BlockState blockstate = this.level().getBlockState(blockPos);
 
 		if (blockstate.blocksMotion()) {
-			if (!level().isClientSide && bounceCount < 6) {
+			if (!level().isClientSide() && bounceCount < 6) {
 				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
 			}
 

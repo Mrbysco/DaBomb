@@ -69,7 +69,7 @@ public class FluidExplosion extends ServerExplosion {
 	}
 
 	@Override
-	public void explode() {
+	public int explode() {
 		this.level.gameEvent(this.source, GameEvent.EXPLODE, BlockPos.containing(this.center()));
 		Set<BlockPos> set = Sets.newHashSet();
 		for (int i = 0; i < 16; ++i) {
@@ -158,5 +158,6 @@ public class FluidExplosion extends ServerExplosion {
 				}
 			}
 		}
+		return toBlow.size();
 	}
 }

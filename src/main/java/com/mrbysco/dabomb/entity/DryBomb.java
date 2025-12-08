@@ -1,5 +1,6 @@
 package com.mrbysco.dabomb.entity;
 
+import com.mrbysco.dabomb.Reference;
 import com.mrbysco.dabomb.config.BombConfig;
 import com.mrbysco.dabomb.explosion.FluidExplosion;
 import com.mrbysco.dabomb.registry.BombRegistry;
@@ -61,19 +62,19 @@ public class DryBomb extends ThrowableItemProjectile {
 
 	@Override
 	public void tick() {
-		if (!this.level().isClientSide && !this.level().getFluidState(blockPosition()).isEmpty()) {
+		if (!this.level().isClientSide() && !this.level().getFluidState(blockPosition()).isEmpty()) {
 			this.explode();
 			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
 
 		super.tick();
-		if (this.level().isClientSide) {
+		if (this.level().isClientSide()) {
 			this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
 		}
 
 		if (tickCount >= 100) {
-			if (!this.level().isClientSide) {
+			if (!this.level().isClientSide()) {
 				this.explode();
 				this.level().broadcastEntityEvent(this, (byte) 3);
 				this.discard();
@@ -103,7 +104,7 @@ public class DryBomb extends ThrowableItemProjectile {
 		BlockState blockstate = this.level().getBlockState(blockPos);
 
 		if (blockstate.blocksMotion()) {
-			if (!level().isClientSide && bounceCount < 6) {
+			if (!level().isClientSide() && bounceCount < 6) {
 				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
 			}
 
@@ -145,17 +146,20 @@ public class DryBomb extends ThrowableItemProjectile {
 	}
 
 	protected void explode() {
-		if (this.level().isClientSide)
+		if (this.level().isClientSide())
 			return;
 		if (this.level() instanceof ServerLevel serverLevel) {
-			FluidExplosion explosion = new FluidExplosion(serverLevel, this, new Vec3(this.getX(), this.getY(0.0625D) + 0.5F, this.getZ()), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
+			float radius = BombConfig.COMMON.dryBombRadius.get().floatValue();
+			FluidExplosion explosion = new FluidExplosion(serverLevel, this, new Vec3(this.getX(), this.getY(0.0625D) + 0.5F, this.getZ()), radius, false,
 					state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
-			explosion.explode();
+			int count = explosion.explode();
 
 			for (ServerPlayer serverplayer : serverLevel.players()) {
 				if (serverplayer.distanceToSqr(this) < 4096.0) {
 					Optional<Vec3> optional = Optional.ofNullable(explosion.getHitPlayers().get(serverplayer));
-					serverplayer.connection.send(new ClientboundExplodePacket(this.position(), optional, ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE));
+					serverplayer.connection.send(new ClientboundExplodePacket(this.position(), radius, count, optional,
+							ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE, Reference.DEFAULT_EXPLOSION_BLOCK_PARTICLES
+					));
 				}
 			}
 		}

@@ -29,7 +29,7 @@ public class RemoteItem extends Item {
 		List<C4> c4s = level.getEntitiesOfClass(C4.class, player.getBoundingBox().inflate(64D))
 				.stream().filter(c4 -> c4.getOwner() != null && c4.getOwner().getUUID().equals(player.getUUID())).toList();
 		if (!c4s.isEmpty()) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				for (C4 c4 : c4s) {
 					c4.explode();
 				}
