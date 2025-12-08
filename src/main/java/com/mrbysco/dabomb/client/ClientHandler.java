@@ -2,6 +2,7 @@ package com.mrbysco.dabomb.client;
 
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ClientHandler {
 	public static void registerItemColors(final RegisterColorHandlersEvent.Item event) {
-		event.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 4159204, BombRegistry.WATER_BOMB_ITEM.get());
+		event.register((stack, tintIndex) -> tintIndex > 0 ? -1 : FastColor.ARGB32.opaque(4159204), BombRegistry.WATER_BOMB_ITEM.get());
 	}
 
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
