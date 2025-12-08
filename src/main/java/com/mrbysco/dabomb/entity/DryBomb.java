@@ -8,6 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundExplodePacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -152,7 +155,21 @@ public class DryBomb extends ThrowableItemProjectile {
 		FluidExplosion explosion = new FluidExplosion(this.level(), this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.dryBombRadius.get().floatValue(), false,
 				state -> !state.isEmpty(), Explosion.BlockInteraction.DESTROY);
 		explosion.explode();
-		explosion.finalizeExplosion(false);
+		if (this.level() instanceof ServerLevel serverLevel) {
+			for (ServerPlayer serverplayer : serverLevel.players()) {
+				if (serverplayer.distanceToSqr(this) < 4096.0) {
+					serverplayer.connection.send(new ClientboundExplodePacket(
+							getX(), getY(), getZ(), explosion.radius,
+							explosion.getToBlow(),
+							explosion.getHitPlayers().get(serverplayer),
+							explosion.getBlockInteraction(),
+							explosion.getSmallExplosionParticles(),
+							explosion.getLargeExplosionParticles(),
+							explosion.getExplosionSound()
+					));
+				}
+			}
+		}
 	}
 
 	@Override
