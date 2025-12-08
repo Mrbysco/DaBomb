@@ -64,9 +64,10 @@ public class WaterBomb extends ThrowableItemProjectile {
 
 	@Override
 	public void tick() {
-		if (!this.level().isClientSide &&
-				(getOwner() instanceof LivingEntity owner && owner.isInWater() || isInWater())) {
+		if (!this.level().isClientSide && isEyeInFluid(FluidTags.WATER)) {
 			this.explode();
+			this.level().broadcastEntityEvent(this, (byte) 3);
+			this.discard();
 		}
 
 		super.tick();
