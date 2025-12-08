@@ -1,1 +1,1 @@
-* Add missing explosion particles to the Water, Lava and Dry bombs
+* Initial port to 1.21.10
