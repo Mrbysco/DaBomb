@@ -8,9 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.game.ClientboundExplodePacket;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -150,28 +147,9 @@ public class WaterBomb extends ThrowableItemProjectile {
 	}
 
 	protected void explode() {
-		if (this.level().isClientSide)
-			return;
-		if (this.level() instanceof ServerLevel serverLevel) {
-			float radius = BombConfig.COMMON.waterBombRadius.get().floatValue();
-			FluidExplosion explosion = new FluidExplosion(this.level(), this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), radius, false,
-					state -> !state.isEmpty() && state.is(FluidTags.WATER), Explosion.BlockInteraction.KEEP);
-			explosion.explode();
-			explosion.finalizeExplosion(true);
-
-			for (ServerPlayer serverplayer : serverLevel.players()) {
-				if (serverplayer.distanceToSqr(this) < 4096.0) {
-					serverplayer.connection.send(new ClientboundExplodePacket(
-							this.position().x, this.position().y, this.position().y, radius,
-							explosion.getToBlow(),
-							explosion.getHitPlayers().get(serverplayer),
-							explosion.getBlockInteraction(),
-							explosion.getSmallExplosionParticles(),
-							explosion.getLargeExplosionParticles(),
-							explosion.getExplosionSound()
-					));
-				}
-			}
-		}
+		FluidExplosion explosion = new FluidExplosion(this.level(), this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.waterBombRadius.get().floatValue(), false,
+				state -> !state.isEmpty() && state.is(FluidTags.WATER), Explosion.BlockInteraction.KEEP);
+		explosion.explode();
+		explosion.finalizeExplosion(true);
 	}
 }
