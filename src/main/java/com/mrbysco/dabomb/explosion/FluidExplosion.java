@@ -83,7 +83,7 @@ public class FluidExplosion extends ServerExplosion {
 						d0 /= d3;
 						d1 /= d3;
 						d2 /= d3;
-						float f = this.radius * (0.7F + this.level.random.nextFloat() * 0.6F);
+						float f = this.radius * (0.7F + this.level.getRandom().nextFloat() * 0.6F);
 						double x = this.center().x;
 						double y = this.center().y;
 						double z = this.center().z;

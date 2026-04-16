@@ -19,10 +19,11 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -91,7 +92,7 @@ public class ExplosionHandler {
 					if (bee != null) {
 						bee.setPosRaw(beeBomb.getX(), beeBomb.getY() + 0.5D, beeBomb.getZ());
 						if (!livingEntities.isEmpty()) {
-							bee.setPersistentAngerTarget(livingEntities.get(level.random.nextInt(livingEntities.size())).getUUID());
+							bee.setPersistentAngerTarget(EntityReference.of(livingEntities.get(level.getRandom().nextInt(livingEntities.size())).getUUID()));
 							bee.startPersistentAngerTimer();
 						}
 						level.addFreshEntity(bee);
@@ -103,14 +104,14 @@ public class ExplosionHandler {
 					for (BlockPos pos : affectedBlocks) {
 						BlockState state = level.getBlockState(pos);
 						if (level.getBlockState(pos.below()).is(BlockTags.DIRT) && state.isAir()) {
-							optionalTag.get().getRandomElement(level.random).ifPresent(holder -> {
+							optionalTag.get().getRandomElement(level.getRandom()).ifPresent(holder -> {
 								Block flower = holder.value();
 								BlockState flowerState = flower.defaultBlockState();
 								if (flowerState.canSurvive(level, pos)) {
-									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombChance.get()) {
+									if (level.getRandom().nextDouble() <= BombConfig.COMMON.flowerBombChance.get()) {
 										level.setBlockAndUpdate(pos, flowerState);
 									}
-									if (level.random.nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
+									if (level.getRandom().nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
 										Bee bee = EntityType.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
 										if (bee != null) {
 											bee.setPosRaw(flowerBomb.getX(), flowerBomb.getY() + 0.5D, flowerBomb.getZ());
@@ -128,9 +129,9 @@ public class ExplosionHandler {
 				for (LivingEntity livingEntity : livingEntities) {
 					int maxTries = 5;
 					for (int tries = 0; tries < maxTries; tries++) {
-						double targetX = livingEntity.getX() + (level.random.nextDouble() - 0.5D) * 64.0D;
-						double targetY = livingEntity.getY() + (double) (level.random.nextInt(64) - 32);
-						double targetZ = livingEntity.getZ() + (level.random.nextDouble() - 0.5D) * 64.0D;
+						double targetX = livingEntity.getX() + (level.getRandom().nextDouble() - 0.5D) * 64.0D;
+						double targetY = livingEntity.getY() + (double) (level.getRandom().nextInt(64) - 32);
+						double targetZ = livingEntity.getZ() + (level.getRandom().nextDouble() - 0.5D) * 64.0D;
 						if (livingEntity instanceof Player player && player.isCreative()) {
 							continue; // Skip teleporting players in creative mode
 						}

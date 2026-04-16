@@ -14,7 +14,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -284,23 +284,23 @@ public class BombDatagen {
 		public void registerSounds() {
 			this.add(BombRegistry.BOMB_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_SHOOT.getId()))
-					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
+					.with(sound(Identifier.withDefaultNamespace("random/bow"))));
 			this.add(BombRegistry.DYNAMITE_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.DYNAMITE_SHOOT.getId()))
-					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
+					.with(sound(Identifier.withDefaultNamespace("random/bow"))));
 			this.add(BombRegistry.C4_SHOOT, definition()
 					.subtitle(modSubtitle(BombRegistry.C4_SHOOT.getId()))
-					.with(sound(ResourceLocation.withDefaultNamespace("random/bow"))));
+					.with(sound(Identifier.withDefaultNamespace("random/bow"))));
 
 			this.add(BombRegistry.BOMB_PLANTED, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_PLANTED.getId()))
-					.with(sound(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted"))));
+					.with(sound(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted"))));
 			this.add(BombRegistry.BOMB_DEFUSED, definition()
 					.subtitle(modSubtitle(BombRegistry.BOMB_DEFUSED.getId()))
-					.with(sound(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused"))));
+					.with(sound(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused"))));
 		}
 
-		public String modSubtitle(ResourceLocation id) {
+		public String modSubtitle(Identifier id) {
 			return DaBomb.MOD_ID + ".subtitle." + id.getPath();
 		}
 	}

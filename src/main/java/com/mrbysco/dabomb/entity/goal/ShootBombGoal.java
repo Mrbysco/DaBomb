@@ -11,7 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;

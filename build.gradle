@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.122'
+    id 'net.neoforged.moddev' version '2.0.141'
     id 'net.darkhax.curseforgegradle' version '1.1.28'
     id 'com.modrinth.minotaur' version "2.+"
 }
@@ -26,7 +26,7 @@ neoForge {
     }
 
     // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -103,8 +103,6 @@ repositories {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
-
     compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
 

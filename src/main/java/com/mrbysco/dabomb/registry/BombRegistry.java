@@ -23,7 +23,7 @@ import com.mrbysco.dabomb.item.RemoteItem;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -185,16 +185,16 @@ public class BombRegistry {
 	);
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
-			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_shoot")));
+			SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_shoot")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> DYNAMITE_SHOOT = SOUND_EVENTS.register("dynamite_shoot", () ->
-			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "dynamite_shoot")));
+			SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "dynamite_shoot")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> C4_SHOOT = SOUND_EVENTS.register("c4_shoot", () ->
-			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "c4_shoot")));
+			SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "c4_shoot")));
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_PLANTED = SOUND_EVENTS.register("bomb_planted", () ->
-			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted")));
+			SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_planted")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_DEFUSED = SOUND_EVENTS.register("bomb_defused", () ->
-			SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused")));
+			SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(DaBomb.MOD_ID, "bomb_defused")));
 
 	public static final Supplier<CreativeModeTab> BOMB_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
 			.icon(() -> BombRegistry.BOMB_ITEM.get().getDefaultInstance())

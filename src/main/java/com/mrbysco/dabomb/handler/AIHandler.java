@@ -8,7 +8,7 @@ import com.mrbysco.dabomb.item.C4Item;
 import com.mrbysco.dabomb.item.ThrowableItem;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -84,7 +84,7 @@ public class AIHandler {
 							DaBomb.LOGGER.error(String.format("Invalid resourcelocation syntax in 'bomberman'. could not find \":\" in %s", configValue));
 							return;
 						}
-						ResourceLocation registry = ResourceLocation.tryParse(values[0]);
+						Identifier registry = Identifier.tryParse(values[0]);
 						EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(registry);
 						List<BombData> dataList = bomberMap.getOrDefault(entityType, new ArrayList<>());
 

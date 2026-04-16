@@ -6,10 +6,7 @@ import com.mrbysco.dabomb.config.BombConfig;
 import com.mrbysco.dabomb.handler.AIHandler;
 import com.mrbysco.dabomb.handler.ExplosionHandler;
 import com.mrbysco.dabomb.registry.BombRegistry;
-import net.minecraft.core.particles.ExplosionParticleInfo;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.WeightedList;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -44,7 +41,7 @@ public class DaBomb {
 		}
 	}
 
-	public static ResourceLocation modLoc(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier modLoc(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 }

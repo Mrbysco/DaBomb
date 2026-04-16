@@ -4,7 +4,7 @@ import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.registry.BombRegistry;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
