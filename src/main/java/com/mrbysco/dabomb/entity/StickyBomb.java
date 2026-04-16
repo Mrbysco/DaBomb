@@ -17,6 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class StickyBomb extends ThrowableItemProjectile {
 
@@ -31,7 +32,7 @@ public class StickyBomb extends ThrowableItemProjectile {
 
 	private ParticleOptions getParticle() {
 		ItemStack itemstack = this.getItem();
-		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
+		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack.getItem()));
 	}
 
 	@Override
@@ -103,7 +104,7 @@ public class StickyBomb extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected boolean updateInWaterStateAndDoFluidPushing() {
+	public boolean isPushedByFluid(FluidType type) {
 		return false;
 	}
 }

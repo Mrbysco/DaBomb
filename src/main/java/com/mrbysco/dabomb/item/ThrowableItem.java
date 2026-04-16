@@ -23,7 +23,7 @@ public class ThrowableItem extends Item {
 	private final float z, velocity, inaccuracy;
 
 	public ThrowableItem(Item.Properties properties, Supplier<EntityType<?>> entityTypeSupplier,
-						 Supplier<SoundEvent> soundSupplier, int cooldown, float z, float velocity, float inaccuracy) {
+	                     Supplier<SoundEvent> soundSupplier, int cooldown, float z, float velocity, float inaccuracy) {
 		super(properties);
 		this.entityTypeSupplier = entityTypeSupplier;
 		this.soundSupplier = soundSupplier;

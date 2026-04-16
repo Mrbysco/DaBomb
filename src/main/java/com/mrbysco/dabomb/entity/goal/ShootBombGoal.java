@@ -36,7 +36,7 @@ public class ShootBombGoal extends Goal {
 	private final float z;
 
 	public ShootBombGoal(Mob bomber, EntityType<?> projectileType,
-						 SoundEvent soundEvent, float bombVelocity, float bomInaccuracy, float z) {
+	                     SoundEvent soundEvent, float bombVelocity, float bomInaccuracy, float z) {
 		this.bomber = bomber;
 		this.projectile = projectileType;
 		this.soundEvent = soundEvent;

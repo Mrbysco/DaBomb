@@ -23,6 +23,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class C4 extends ThrowableItemProjectile {
 
@@ -37,7 +38,7 @@ public class C4 extends ThrowableItemProjectile {
 
 	private ParticleOptions getParticle() {
 		ItemStack itemstack = this.getItem();
-		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
+		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack.getItem()));
 	}
 
 	@Override
@@ -112,7 +113,7 @@ public class C4 extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public InteractionResult interact(Player player, InteractionHand hand) {
+	public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Tags.Items.TOOLS_SHEAR) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {
 			if (this.level() instanceof ServerLevel serverLevel)
@@ -123,7 +124,7 @@ public class C4 extends ThrowableItemProjectile {
 			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
-		return super.interact(player, hand);
+		return super.interact(player, hand, location);
 	}
 
 	@Override
@@ -132,7 +133,7 @@ public class C4 extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected boolean updateInWaterStateAndDoFluidPushing() {
+	public boolean isPushedByFluid(FluidType type) {
 		return false;
 	}
 }

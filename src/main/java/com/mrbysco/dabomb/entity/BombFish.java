@@ -31,7 +31,7 @@ public class BombFish extends ThrowableItemProjectile {
 
 	private ParticleOptions getParticle() {
 		ItemStack itemstack = this.getItem();
-		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
+		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.SMOKE : new ItemParticleOption(ParticleTypes.ITEM, itemstack.getItem()));
 	}
 
 	@Override

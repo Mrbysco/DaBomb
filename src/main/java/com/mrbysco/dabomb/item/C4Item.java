@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class C4Item extends ThrowableItem {
 
 	public C4Item(Properties properties, Supplier<EntityType<?>> entityTypeSupplier,
-				  Supplier<SoundEvent> soundSupplier, int cooldown, float z, float velocity, float inaccuracy) {
+	              Supplier<SoundEvent> soundSupplier, int cooldown, float z, float velocity, float inaccuracy) {
 		super(properties, entityTypeSupplier, soundSupplier, cooldown, z, velocity, inaccuracy);
 	}
 
