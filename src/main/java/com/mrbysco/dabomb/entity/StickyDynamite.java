@@ -99,11 +99,6 @@ public class StickyDynamite extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public Vec3 getPassengerRidingPosition(Entity pEntity) {
-		return new Vec3(0, 0.5F, 0);
-	}
-
-	@Override
 	public boolean isPushedByFluid(FluidType type) {
 		return false;
 	}

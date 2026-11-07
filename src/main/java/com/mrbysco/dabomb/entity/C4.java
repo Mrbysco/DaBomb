@@ -108,11 +108,6 @@ public class C4 extends ThrowableItemProjectile {
 	}
 
 	@Override
-	public Vec3 getPassengerRidingPosition(Entity pEntity) {
-		return new Vec3(0, 0.5F, 0);
-	}
-
-	@Override
 	public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Tags.Items.TOOLS_SHEAR) && (getOwner() == null || player.getUUID().equals(getOwner().getUUID()))) {

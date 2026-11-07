@@ -96,9 +96,4 @@ public class BombFish extends ThrowableItemProjectile {
 	protected void explode() {
 		this.level().explode(this, this.getX(), this.getY(0.0625D) + 0.5F, this.getZ(), BombConfig.COMMON.bombRadius.get().floatValue(), Level.ExplosionInteraction.TNT);
 	}
-
-	@Override
-	public Vec3 getPassengerRidingPosition(Entity pEntity) {
-		return new Vec3(0, 0.5F, 0);
-	}
 }

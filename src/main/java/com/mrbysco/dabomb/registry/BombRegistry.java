@@ -30,6 +30,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -182,6 +183,7 @@ public class BombRegistry {
 			MobCategory.MISC,
 			builder -> builder
 					.sized(0.3125F, 0.3125F).clientTrackingRange(4).updateInterval(10)
+					.vehicleAttachment(new Vec3(0.0, -0.25, 0.0))
 	);
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_SHOOT = SOUND_EVENTS.register("bomb_shoot", () ->
