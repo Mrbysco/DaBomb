@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:water_bomb"
+        "recipes": "dabomb:water_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

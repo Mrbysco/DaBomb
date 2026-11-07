@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:sticky_dynamite"
+        "recipes": "dabomb:sticky_dynamite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

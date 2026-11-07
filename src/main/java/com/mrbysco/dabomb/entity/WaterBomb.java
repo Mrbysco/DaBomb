@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -102,7 +103,7 @@ public class WaterBomb extends ThrowableItemProjectile {
 		BlockPos blockPos = hitBlock.getBlockPos();
 		BlockState blockstate = this.level().getBlockState(blockPos);
 
-		if (blockstate.blocksMotion()) {
+		if (blockstate.is(BlockTags.BLOCKS_MOTION)) {
 			if (!level().isClientSide() && bounceCount < 6) {
 				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
 			}
@@ -158,7 +159,7 @@ public class WaterBomb extends ThrowableItemProjectile {
 				if (serverplayer.distanceToSqr(this) < 4096.0) {
 					Optional<Vec3> optional = Optional.ofNullable(explosion.getHitPlayers().get(serverplayer));
 					serverplayer.connection.send(new ClientboundExplodePacket(this.position(), radius, count, optional,
-							ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE, Reference.DEFAULT_EXPLOSION_BLOCK_PARTICLES
+							ParticleTypes.EXPLOSION, SoundEvents.GENERIC_EXPLODE, Reference.DEFAULT_EXPLOSION_BLOCK_PARTICLES, true
 					));
 				}
 			}

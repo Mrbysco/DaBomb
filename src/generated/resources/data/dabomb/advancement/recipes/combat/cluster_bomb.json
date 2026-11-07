@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:cluster_bomb"
+        "recipes": "dabomb:cluster_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

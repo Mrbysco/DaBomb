@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:ender_bomb"
+        "recipes": "dabomb:ender_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

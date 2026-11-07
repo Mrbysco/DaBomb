@@ -3,51 +3,50 @@ package com.mrbysco.dabomb.datagen;
 import com.mrbysco.dabomb.DaBomb;
 import com.mrbysco.dabomb.client.DefaultColorTint;
 import com.mrbysco.dabomb.registry.BombRegistry;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataRegistryEntriesEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 @EventBusSubscriber
 public class BombDatagen {
 	@SubscribeEvent
+	static void onGatherRegistries(GatherDataRegistryEntriesEvent event) {
+		event.recipe(BombRecipes::new);
+	}
+
+	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-
-		generator.addProvider(true, new BombRecipes.Runner(packOutput, lookupProvider));
-
-		generator.addProvider(true, new BombLanguage(packOutput));
-		generator.addProvider(true, new BombSoundDefinitions(packOutput));
-		generator.addProvider(true, new BombModels(packOutput));
+		event.createProvider(BombLanguage::new);
+		event.createProvider(BombSoundDefinitions::new);
+		event.createProvider(BombModels::new);
 	}
 
 	private static class BombRecipes extends RecipeProvider {
-		public BombRecipes(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
-			super(provider, recipeOutput);
+		public BombRecipes(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+			super(recipeOutput, advancementOutput);
 		}
 
 		@Override
@@ -55,7 +54,7 @@ public class BombDatagen {
 			shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_ITEM.get(), 2)
 					.pattern(" G ").pattern("GSG").pattern(" G ")
 					.define('G', Tags.Items.GUNPOWDERS)
-					.define('S', Tags.Items.SANDS)
+					.define('S', Tags.BlockItems.SANDS.item())
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
 					.save(this.output);
 			shaped(RecipeCategory.COMBAT, BombRegistry.DIRT_BOMB_ITEM.get())
@@ -66,7 +65,7 @@ public class BombDatagen {
 					.save(this.output);
 			shaped(RecipeCategory.COMBAT, BombRegistry.FLOWER_BOMB_ITEM.get())
 					.pattern(" F ").pattern("FBF").pattern(" F ")
-					.define('F', ItemTags.SMALL_FLOWERS)
+					.define('F', BlockItemTags.SMALL_FLOWERS.item())
 					.define('B', BombRegistry.BOMB_ITEM.get())
 					.unlockedBy("has_bomb", has(BombRegistry.BOMB_ITEM.get()))
 					.save(this.output);
@@ -97,7 +96,7 @@ public class BombDatagen {
 			shaped(RecipeCategory.COMBAT, BombRegistry.BOMB_FISH_ITEM.get(), 2)
 					.pattern(" P ").pattern("GSG").pattern(" G ")
 					.define('G', Tags.Items.GUNPOWDERS)
-					.define('S', Tags.Items.SANDS)
+					.define('S', Tags.BlockItems.SANDS.item())
 					.define('P', Items.PUFFERFISH)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
 					.save(this.output);
@@ -123,7 +122,7 @@ public class BombDatagen {
 			shaped(RecipeCategory.COMBAT, BombRegistry.DYNAMITE_ITEM.get(), 3)
 					.pattern(" # ").pattern("GSG").pattern("GGG")
 					.define('G', Tags.Items.GUNPOWDERS)
-					.define('S', Tags.Items.SANDS)
+					.define('S', Tags.BlockItems.SANDS.item())
 					.define('#', Tags.Items.STRINGS)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
 					.save(this.output);
@@ -139,7 +138,7 @@ public class BombDatagen {
 			shaped(RecipeCategory.COMBAT, BombRegistry.C4_ITEM.get(), 2)
 					.pattern(" R ").pattern("GSG").pattern("GHG")
 					.define('G', Tags.Items.GUNPOWDERS)
-					.define('S', Tags.Items.SANDS)
+					.define('S', Tags.BlockItems.SANDS.item())
 					.define('R', Tags.Items.DUSTS_REDSTONE)
 					.define('H', Items.HONEY_BOTTLE)
 					.unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
@@ -150,22 +149,6 @@ public class BombDatagen {
 					.define('R', Tags.Items.DUSTS_REDSTONE)
 					.unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
 					.save(this.output);
-		}
-
-		public static class Runner extends RecipeProvider.Runner {
-			public Runner(PackOutput output, CompletableFuture<Provider> completableFuture) {
-				super(output, completableFuture);
-			}
-
-			@Override
-			protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
-				return new BombRecipes(provider, recipeOutput);
-			}
-
-			@Override
-			public String getName() {
-				return "DaBomb Recipes";
-			}
 		}
 	}
 

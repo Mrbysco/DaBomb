@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -87,7 +88,7 @@ public class FlowerBomb extends ThrowableItemProjectile {
 		BlockPos blockPos = hitBlock.getBlockPos();
 		BlockState blockstate = this.level().getBlockState(blockPos);
 
-		if (blockstate.blocksMotion()) {
+		if (blockstate.is(BlockTags.BLOCKS_MOTION)) {
 			if (!level().isClientSide() && bounceCount < 6) {
 				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0F, 4.0F);
 			}

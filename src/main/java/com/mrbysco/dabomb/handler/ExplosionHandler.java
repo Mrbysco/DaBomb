@@ -21,7 +21,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -88,7 +88,7 @@ public class ExplosionHandler {
 			} else if (explosion.getDirectSourceEntity() instanceof BeeBomb beeBomb) {
 				final List<LivingEntity> livingEntities = affectedEntities.stream().filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity) entity).toList();
 				for (int i = 0; i < BombConfig.COMMON.beeAmount.get(); i++) {
-					Bee bee = EntityType.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
+					Bee bee = EntityTypes.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
 					if (bee != null) {
 						bee.setPosRaw(beeBomb.getX(), beeBomb.getY() + 0.5D, beeBomb.getZ());
 						if (!livingEntities.isEmpty()) {
@@ -112,7 +112,7 @@ public class ExplosionHandler {
 										level.setBlockAndUpdate(pos, flowerState);
 									}
 									if (level.getRandom().nextDouble() <= BombConfig.COMMON.flowerBombBeeChance.get()) {
-										Bee bee = EntityType.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
+										Bee bee = EntityTypes.BEE.create(level, EntitySpawnReason.MOB_SUMMONED);
 										if (bee != null) {
 											bee.setPosRaw(flowerBomb.getX(), flowerBomb.getY() + 0.5D, flowerBomb.getZ());
 											level.addFreshEntity(bee);
@@ -135,7 +135,7 @@ public class ExplosionHandler {
 						if (livingEntity instanceof Player player && player.isCreative()) {
 							continue; // Skip teleporting players in creative mode
 						}
-						if (livingEntity.randomTeleport(targetX, targetY, targetZ, true)) {
+						if (livingEntity.randomTeleport(targetX, targetY, targetZ, true, BlockTags.ENDERMAN_DOES_NOT_TELEPORT_TO)) {
 							level.playSound((Player) null, targetX, targetY, targetZ, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1.0F, 1.0F);
 							break;
 						}

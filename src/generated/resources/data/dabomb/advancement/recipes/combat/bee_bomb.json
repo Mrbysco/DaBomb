@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dabomb:bee_bomb"
+        "recipes": "dabomb:bee_bomb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@ public class DaBomb {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	public DaBomb(IEventBus eventBus, ModContainer container, Dist dist) {
-		container.registerConfig(ModConfig.Type.COMMON, BombConfig.commonSpec);
+		container.registerConfig(ModConfig.Type.LOCAL, BombConfig.commonSpec);
 		eventBus.register(BombConfig.class);
 
 		BombRegistry.ITEMS.register(eventBus);
