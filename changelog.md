@@ -1,3 +1,2 @@
-* Fix the Water Bomb exploding mechanic
-* Fix the Water Bomb item not showing the water texture
-* Fix particles not showing for the Dry, Water and Lava bombs
+* Fix c4 attachment point
+* Remove passenger riding position override from C4, Sticky Bomb, Sticky Dynamite and Bomb Fish
